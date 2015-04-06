@@ -8,8 +8,9 @@ var version = require('../package.json').version;
 program
   .version(version)
   .usage('[options] <input>')
-  .option('-p, --pretty', 'Pretty print output (only JSON)')
+  .option('-p, --pretty', 'Pretty print output (only JSONN)')
   .option('-y, --yaml', 'Use YAML dialect instead of JSON')
+  .option('-o, --object', 'Object mode')
   .parse(process.argv);
 
 if(program.args.length < 1) {
@@ -19,7 +20,8 @@ if(program.args.length < 1) {
 };
 
 var input = program.args.join(' ');
-var output = USON.parse(input);
+var options = { mode: program.object ? 'object' : null};
+var output = USON.parse(input, options);
 var str = null;
 
 if(program.yaml) {

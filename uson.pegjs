@@ -1,10 +1,12 @@
-start = ws head:control tail:(ws c:control {return c})* ws {return [head].concat(tail)}
+start = ws head:control tail:expr {return {type:'expr',value:head,tail:tail}}
+
+expr = ws out:(v:control [, ]* {return v})* ws {return out}
 
 control
-  = k:keyExpr tail:(ws ':' ws v:value {return v}) {return ['objectAdd', k, tail]}
+  = k:keyExpr tail:(ws ':' ws v:control {return v}) {return {type:'objectAdd',value:[k].concat(tail)}}
   / value
 
-keyExpr = k:nestedKey tail:('[' k:nestedKey? ']' {return k || true})* {return [k, tail]}
+keyExpr = k:nestedKey tail:('[' k:nestedKey? ']' {return k || true})* {return {type:'keyExpr',value:[k].concat(tail)}}
 
 nestedKey = head:key tail:('.' k:key {return k})* {return [head].concat(tail)}
 
@@ -21,9 +23,9 @@ value
   / quotedString
   / string
 
-object = '{' c:control '}' {return c}
+object = '{' v:expr '}' {return {type:'objectAddNormal',value:v}}
 
-array = '[' arr:(v:control [, ]* {return v})* ']' {return arr} 
+array = '[' v:expr ']' {return {type:'arrayAdd',value:v}} 
 
 boolean = v:('true' / 'false') {return v=='true'}
 
