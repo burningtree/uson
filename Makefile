@@ -1,3 +1,4 @@
+NODE = node
 PEGJS = node_modules/.bin/pegjs
 BROWSERIFY = node_modules/.bin/browserify
 UGLIFY =  node_modules/.bin/uglifyjs
@@ -12,4 +13,7 @@ pack:
 
 minify:
 	$(UGLIFY) dist/uson.pack.js -o dist/uson.min.js
+
+bench:
+	$(NODE) benchmark/benchmark.js
 

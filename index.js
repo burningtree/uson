@@ -96,6 +96,7 @@ var USON = {
     var tree = parser.parse(str);
     return interpreter.process(tree);
   },
+  tokenize: parser.parse,
   stringify: function() { return null; }
 };
 

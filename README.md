@@ -13,12 +13,16 @@ Inspired by python CLI utility [jarg](https://github.com/jdp/jarg) by Justin Pol
 * [CLI (command-line) tool](#cli-command-line-tool)
 
 ## μson Overview
+There are two output modes:
+* `array` (default) - Output as array.
+* `object` - Output as combined object. Suitable for use in the command line.
+
 ### Example
 ```
-endpoint.id:wikipedia pages:[Malta Prague "New York"]
+endpoint:id:wikipedia pages:[Malta Prague "New York"]
 ```
 
-Result in JSON:
+Result in JSON (array mode):
 ```json
 [
   {
@@ -36,7 +40,7 @@ Result in JSON:
 ]
 ```
 
-or in YAML:
+or in YAML (array mode):
 ```yaml
 - endpoint:
     id: wikipedia
@@ -46,6 +50,19 @@ or in YAML:
     - New York
 ```
 
+and `object` mode result:
+```json
+{
+  "endpoint": {
+    "id": "wikipedia"
+  },
+  "pages": [
+    "Malta",
+    "Prague",
+    "New York"
+  ]
+}
+```
 
 ### Basic usage
 
