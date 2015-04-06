@@ -27,7 +27,7 @@ TreeInterpreter.prototype.visit = function(node) {
   if(toString.call(node) === "[object Array]") {
     if(node[0] == 'objectAdd') {
       var output = {};
-      output[node[1][0].join('.')] = node[2]; 
+      output[node[1][0].join('.')] = self.visit(node[2]);
       return self.visitObject(output);
     } else if(node[0] == 'arrayAdd') {
       return self.visit(node[1]);
