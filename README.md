@@ -62,12 +62,12 @@ Optional:
 * regexp TODO
 * function TODO
 
-### Object expanding
+### Nested objects (expanding)
 
-You can use dot notation for expand objects, for example:
+You can use standart colon notation for expand objects, for example:
 
 ```
-cities.eu.hu.budapest:Budapest
+cities:eu:hu:budapest:Budapest
 ```
 
 become:

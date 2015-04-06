@@ -1,10 +1,23 @@
-var _ = require('lodash');
 var parser = require('./dist/parser');
+var assign = require('lodash.assign');
 var toString = Object.prototype.toString;
 
-function nestObject(key, value) {
-  output = {};
-  return output;
+function toObject(values) {
+  var arrcount = 0;
+  var obj = {};
+  values.forEach(function(item) {
+    var type = toString.call(item);
+    if(type == '[object Array]') {
+      obj[arrcount] = item;
+      arrcount = arrcount+1;
+    } else if(type == '[object Object]') {
+      obj = assign(obj, item);
+    } else {
+      obj[arrcount] = item;
+      arrcount = arrcount+1;
+    }
+  });
+  return obj;
 }
 
 function TreeInterpreter(options) {
@@ -15,23 +28,9 @@ function TreeInterpreter(options) {
 
 TreeInterpreter.prototype.process = function(node) {
   if(this.mode == 'object') {
-    var output = this.visit(node);
-    return this.visitobjectAddNormal({}, output);
+    return toObject(this.visit(node));
   }
   return this.visit(node);
-}
-
-TreeInterpreter.prototype.visitObject = function(node) {
-  var self = this;
-  Object.keys(node).forEach(function(k){
-    if(m = k.match(/^([^\.]+)\.(.+)$/)) {
-      var obj = {};
-      obj[m[2]] = node[k];
-      node[m[1]] = self.visitObject(obj);
-      delete node[k];
-    }
-  });
-  return node;
 }
 
 TreeInterpreter.prototype.visitArray = function(node) {
@@ -43,30 +42,16 @@ TreeInterpreter.prototype.visitArray = function(node) {
   return output;
 }
 
-TreeInterpreter.prototype.visitobjectAdd = function(node) {
+TreeInterpreter.prototype.visitObjectAssign = function(node) {
   var out = {};
   var key = this.visit(node.value[0]);
   out[key[0].join('.')] = this.visit(node.value[1]);
-  return this.visitObject(out);
+  return out;
 }
 
-TreeInterpreter.prototype.visitobjectAddNormal = function(node, values) {
+TreeInterpreter.prototype.visitObjectAdd = function(node, values) {
   var values = values || this.visitArray(node.value);
-  var arrcount = 0;
-  var obj = {};
-  values.forEach(function(item) {
-    var type = toString.call(item);
-    if(type == '[object Array]') {
-      obj[arrcount] = item;
-      arrcount = arrcount+1;
-    } else if(type == '[object Object]') {
-      obj = _.assign(obj, item);
-    } else {
-      obj[arrcount] = item;
-      arrcount = arrcount+1;
-    }
-  });
-  return obj;
+  return toObject(values);
 }
 
 
@@ -74,7 +59,7 @@ TreeInterpreter.prototype.visitkeyExpr = function(node) {
   return this.visit(node.value);
 }
 
-TreeInterpreter.prototype.visitarrayAdd = function(node) {
+TreeInterpreter.prototype.visitArrayAdd = function(node) {
   return this.visit(node.value);
 }
 
@@ -101,7 +86,7 @@ TreeInterpreter.prototype.visit = function(node) {
   }
 }
 
-module.exports = {
+var USON = {
   parse: function(str, options) {
     var interpreter = new TreeInterpreter(options);
     var tree = parser.parse(str);
@@ -109,3 +94,5 @@ module.exports = {
   },
   stringify: function() {}
 }
+
+module.exports = USON;

@@ -1,14 +1,12 @@
-start = ws head:control tail:expr {return {type:'expr',value:head,tail:tail}}
+start = ws head:control tail:expr {return [head].concat(tail)}
 
 expr = ws out:(v:control ws {return v})* ws {return out}
 
 control
-  = k:keyExpr tail:(ws ':' ws v:control {return v}) {return {type:'objectAdd',value:[k].concat(tail)}}
+  = k:keyExpr tail:(ws ':' ws v:control {return v}) {return {type:'ObjectAssign',value:[k].concat(tail)}}
   / value
 
-keyExpr = k:nestedKey tail:('[' k:nestedKey? ']' {return k || true})* {return {type:'keyExpr',value:[k].concat(tail)}}
-
-nestedKey = head:key tail:('.' k:key {return k})* {return [head].concat(tail)}
+keyExpr = k:key tail:('[' k:key? ']' {return k || true})* {return [[k]].concat(tail)}
 
 key = k:[-_a-zA-Z0-9]+ {return k.join('')}
 
@@ -23,9 +21,9 @@ value
   / quotedString
   / string
 
-object = '{' v:expr '}' {return {type:'objectAddNormal',value:v}}
+object = '{' v:expr '}' {return {type:'ObjectAdd',value:v}}
 
-array = '[' v:expr ']' {return {type:'arrayAdd',value:v}} 
+array = '[' v:expr ']' {return {type:'ArrayAdd',value:v}}
 
 boolean = v:('true' / 'false') {return v=='true'}
 
