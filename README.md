@@ -28,7 +28,8 @@ Result in JSON:
 
 or in YAML:
 ```yaml
-- endpoint: wikipedia
+- endpoint:
+    id: wikipedia
 - pages:
     - Malta
     - Prague
@@ -37,6 +38,9 @@ or in YAML:
 
 ## Grammar
 See (uson.pegjs)[uson.pegjs] file.
+
+## Author
+Jan Stránský &lt;jan.stransky@arnal.cz&gt;
 
 ## Licence
 MIT
