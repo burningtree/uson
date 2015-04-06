@@ -13,6 +13,15 @@ Inspired by python CLI utility [jarg](https://github.com/jdp/jarg) by Justin Pol
 * [CLI (command-line) tool](#cli-command-line-tool)
 
 ## μson Overview
+
+* [Example](#example)
+* [Basic usage](#basic-usage)
+  * [Standart types](#standart-types)
+  * [Arrays](#arrays)
+  * [Objects](#objects)
+  * [Nested objects (expanding)](#nested-objects-expanding)
+* [Grammar](#grammar)
+
 There are two output modes:
 * `array` (default) - Output as array.
 * `object` - Output as combined object. Suitable for use in the command line.
@@ -83,29 +92,6 @@ Optional:
 * regexp TODO
 * function TODO
 
-#### Nested objects (expanding)
-
-You can use standart colon notation for expand objects, for example:
-
-```
-cities:eu:hu:budapest:Budapest
-```
-
-become:
-```json
-[
-  {
-    "cities": {
-      "eu": {
-        "hu": {
-          "budapest": "Budapest"
-        }
-      }
-    }
-  }
-]
-```
-
 #### Standart types
 
 ```
@@ -113,7 +99,7 @@ number:12.05 text:Banana quotedText:"John Devilseed" empty:null good:true
 ```
 
 Output in `object` mode:
-```javascript
+```json
 {
   "number": 12.05,
   "text": "Banana",
@@ -126,11 +112,11 @@ Output in `object` mode:
 #### Arrays
 
 ```
-simple:[1,2,3] texts:[Malta,Budapest,"New York"] objects:[{id:1}]
+simple:[1 2 3] texts:[Malta Budapest "New York"] objects:[{id:1}]
 ```
 
 Output in `object` mode:
-```javascript
+```json
 {
   "simple": [
     1,
@@ -157,7 +143,7 @@ obj:{name:John} {nested:[{id:42} value:"Nagano"]}
 ```
 
 Output in `object` mode:
-```javascript
+```json
 {
   "obj": {
     "name": "John"
@@ -171,6 +157,29 @@ Output in `object` mode:
     }
   ]
 }
+```
+
+#### Nested objects (expanding)
+
+You can use standart colon notation for expand objects, for example:
+
+```
+cities:eu:hu:budapest:Budapest
+```
+
+become:
+```json
+[
+  {
+    "cities": {
+      "eu": {
+        "hu": {
+          "budapest": "Budapest"
+        }
+      }
+    }
+  }
+]
 ```
 
 ### Grammar
