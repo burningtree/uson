@@ -41,7 +41,7 @@
       "expression": "{a:1 b:2 c:3}",
       "result": {
         "array": [ { "a":1, "b":2, "c":3 } ],
-        "object": { "0": { "a":1, "b":2, "c":3 } }
+        "object": { "a":1, "b":2, "c":3 }
       }
     }
   ]
