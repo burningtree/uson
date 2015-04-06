@@ -1,6 +1,6 @@
 start = ws head:control tail:expr {return {type:'expr',value:head,tail:tail}}
 
-expr = ws out:(v:control [, ]* {return v})* ws {return out}
+expr = ws out:(v:control ws {return v})* ws {return out}
 
 control
   = k:keyExpr tail:(ws ':' ws v:control {return v}) {return {type:'objectAdd',value:[k].concat(tail)}}
@@ -35,10 +35,10 @@ null = 'null' {return null}
 
 regExp = '/' pattern:[^/]* '/' flags:[i]* {return new RegExp(pattern.join(''), flags)}
 
-number = v:[0-9.]+ {return parseFloat(v.join(''))}
+number = v:[0-9\.\-]+ {return parseFloat(v.join(''))}
 
 quotedString = '"' s:[^"]+ '"' {return s.join('')}
 
 string = v:[-_a-zA-Z0-9]+ {return v.join('')}
 
-ws = [\r\t\n ]*
+ws = [\r\t\n, ]*

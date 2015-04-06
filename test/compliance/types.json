@@ -1,0 +1,110 @@
+[{
+  "cases": [
+    {
+      "expression": "1",
+      "result": {
+        "array": [ 1 ] ,
+        "object": { "0": 1 }
+      }
+    },
+    {
+      "expression": "42.42",
+      "result": {
+        "array": [ 42.42 ] ,
+        "object": { "0": 42.42 }
+      }
+    },
+    {
+      "expression": "-50.43",
+      "result": {
+        "array": [ -50.43 ] ,
+        "object": { "0": -50.43 }
+      }
+    }
+  ]
+},{
+  "cases": [
+    {
+      "expression": "abc",
+      "result": {
+        "array": [ "abc" ] ,
+        "object": { "0": "abc" }
+      }
+    },
+    {
+      "expression": "\"abc\"",
+      "result": {
+        "array": [ "abc" ] ,
+        "object": { "0": "abc" }
+      }
+    },
+    {
+      "expression": "\"abc def\"",
+      "result": {
+        "array": [ "abc def" ] ,
+        "object": { "0": "abc def" }
+      }
+    }
+  ]
+},{
+  "cases": [
+    {
+      "expression": "null",
+      "result": {
+        "array": [ null ] ,
+        "object": { "0": null }
+      }
+    }
+  ]
+},{
+  "cases": [
+    {
+      "expression": "true",
+      "result": {
+        "array": [ true ] ,
+        "object": { "0": true }
+      }
+    },
+    {
+      "expression": "false",
+      "result": {
+        "array": [ false ] ,
+        "object": { "0": false }
+      }
+    }
+  ]
+},{
+  "cases": [
+    {
+      "expression": "[a]",
+      "result": {
+        "array": [["a"]],
+        "object": { "0": ["a"] }
+      }
+    },
+    {
+      "expression": "[1, 2, 3]",
+      "result": {
+        "array": [[ 1, 2, 3 ]],
+        "object": { "0": [ 1, 2, 3 ] }
+      }
+    }
+  ]
+},{
+  "cases": [
+    {
+      "expression": "{a:1}",
+      "result": {
+        "array": [ { "a":1 } ],
+        "object": { "a":1 }
+      }
+    },
+    {
+      "expression": "{a:1 b:2 c:3}",
+      "result": {
+        "array": [ { "a":1, "b":2, "c":3 } ],
+        "object": { "a":1, "b":2, "c":3 }
+      }
+    }
+  ]
+}]
