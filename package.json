@@ -1,0 +1,31 @@
+{
+  "name": "uson",
+  "version": "0.1.0",
+  "description": "μson (uson) is a shorthand for JSON",
+  "main": "index.js",
+  "bin": {
+    "uson": "bin/cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/burningtree/uson.git"
+  },
+  "keywords": [
+    "json",
+    "serialization",
+    "yaml"
+  ],
+  "author": "Jan Stránský <jan.stransky@arnal.cz>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/burningtree/uson/issues"
+  },
+  "homepage": "https://github.com/burningtree/uson",
+  "dependencies": {
+    "commander": "^2.7.1",
+    "js-yaml": "^3.2.7"
+  }
+}
