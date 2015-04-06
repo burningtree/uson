@@ -8,7 +8,7 @@ var version = require('../package.json').version;
 program
   .version(version)
   .usage('[options] <input>')
-  .option('-p, --pretty', 'Pretty print output (only JSONN)')
+  .option('-p, --pretty', 'Pretty print output (only JSON)')
   .option('-y, --yaml', 'Use YAML dialect instead of JSON')
   .option('-o, --object', 'Object mode')
   .parse(process.argv);
