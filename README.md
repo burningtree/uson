@@ -109,14 +109,14 @@ become:
 #### Standart types
 
 ```
-number:12.05 text:John quotedText:"John Devilseed" empty:null good:true
+number:12.05 text:Banana quotedText:"John Devilseed" empty:null good:true
 ```
 
 Output in `object` mode:
 ```javascript
 {
   "number": 12.05,
-  "text": "John",
+  "text": "Banana",
   "quotedText": "John Devilseed",
   "empty": null,
   "good": true
@@ -129,7 +129,7 @@ Output in `object` mode:
 simple:[1,2,3] texts:[Malta,Budapest,"New York"] objects:[{id:1}]
 ```
 
-Output `object` mode:
+Output in `object` mode:
 ```javascript
 {
   "simple": [
@@ -158,6 +158,7 @@ obj:{name:John} {nested:[{id:42} value:"Nagano"]}
 
 Output in `object` mode:
 ```javascript
+{
   "obj": {
     "name": "John"
   },
