@@ -1,5 +1,5 @@
 # μson (uson) 
-[![Build Status](https://travis-ci.org/burningtree/uson.svg)](https://travis-ci.org/burningtree/uson) [![Dependency Status](https://david-dm.org/burningtree/uson.svg)](https://david-dm.org/burningtree/uson) [![NPM version](https://badge.fury.io/js/uson.svg)](http://badge.fury.io/js/uson)
+[![Build Status](https://travis-ci.org/burningtree/uson.svg)](https://travis-ci.org/burningtree/uson) [![Dependency Status](https://david-dm.org/burningtree/uson.svg)](https://david-dm.org/burningtree/uson) [![npm](https://img.shields.io/npm/v/uson.svg)](https://www.npmjs.com/package/uson)
 
 A compact human-readable data serialization format especially designed for shell.
 
@@ -140,8 +140,13 @@ Output:
 
 ## Browser usage
 
+```
+$ bower install uson
+```
+
+### Usage
 ```html
-  <script src="uson.min.js"></script>
+  <script src="bower_components/uson/dist/uson.min.js"></script>
   <script>
     var output = USON.pack('a b c');
     console.log(output);
