@@ -12,10 +12,10 @@ peg: uson.pegjs
 	$(PEGJS) -o speed $< dist/parser.js
 
 pack:
-	$(BROWSERIFY) --standalone USON index.js -o dist/uson.pack.js
+	$(BROWSERIFY) --standalone USON -o dist/uson.pack.js index.js
 
 minify:
-	$(UGLIFY) dist/uson.pack.js -o dist/uson.min.js
+	$(UGLIFY) -m -o dist/uson.min.js dist/uson.pack.js
 
 bench:
 	$(NODE) benchmark/benchmark.js

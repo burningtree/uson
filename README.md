@@ -302,16 +302,17 @@ Complete usage:
 ```
 $ uson --h
 
-  Usage: cli [options] [expression]
+  Usage: uson [options] [expression]
 
   Options:
 
     -h, --help           output usage information
     -V, --version        output the version number
-    -i, --input <file>   Use input file
-        --output <file>  Write output to file instead of stdout
+    -i, --input <file>   Load data from file
+        --output <file>  Write output to file
     -p, --pretty         Pretty print output (only JSON)
     -y, --yaml           Return output in YAML
+    -m, --msgpack        Return output in msgpack
     -o, --object         Object mode
 
 ```

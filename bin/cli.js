@@ -22,7 +22,6 @@ program
 function parse(input) {
   var output = USON.parse(input, program.object);
   var space = (program.pretty ? 2 : false);
-  var str = null;
 
   if(program.msgpack) {
     return msgpack.pack(output);
