@@ -118,7 +118,7 @@ Output in `object` mode:
   "quotedText": "John Devilseed",
   "empty": null,
   "good": true
-}⏎  
+}
 ```
 
 #### Arrays
@@ -145,7 +145,7 @@ Output in `object` mode:
       "id": 1
     }
   ]
-}⏎
+}
 ```
 
 #### Objects
@@ -269,7 +269,7 @@ $ uson 'user:john age:42'
 ```
 Return:
 ```
-[{"user":"john"},{"age":42}]⏎
+[{"user":"john"},{"age":42}]
 ```
 
 For `object` mode use option `-o` or `--object`.
