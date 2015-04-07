@@ -22,7 +22,7 @@ This is initial implementation written in Javascript and node.js. Grammar is wri
   * [Standart types](#standart-types)
   * [Arrays](#arrays)
   * [Objects](#objects)
-  * [Nested objects (expanding)](#nested-objects-expanding)
+  * [Nested objects](#nested-objects)
   * [Comments](#comments)
 * [Grammar](#grammar)
 
@@ -32,6 +32,7 @@ This is initial implementation written in Javascript and node.js. Grammar is wri
 * Whitespace is not significant.
 * String quoting is optional.
 * In Array or Object, comma `,` can be replaced by whitespace ` `.
+* Object assignation with colon `:` can be repeated to create nested objects.
 
 #### Output modes
 There are two output modes:
@@ -171,7 +172,7 @@ Output in `object` mode:
 }
 ```
 
-#### Nested objects (expanding)
+#### Nested objects
 
 You can use standart colon notation for expand objects, for example:
 
@@ -203,7 +204,13 @@ array:[1 2 3] # this is comment
 
 Output:
 ```json
-[1,2,3]
+{
+  "array": [
+    1,
+    2,
+    3
+  ]
+}
 ```
 
 
