@@ -2,9 +2,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.1.2] - 2015-04-07
+## [Unreleased]
+
+## [0.1.2]
 ### Added
 - Stream support for CLI.
+- Basic benchmarks.
+- More documentation.
+
+### Changed
+- Replace lodash.assign with ES6 object-assign polyfill.
 
 ## [0.1.1] - 2015-04-06
 ### Added
@@ -16,8 +23,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Grammar and interpreter optimalizations. 
 
 ## 0.1.0 - 2014-04-05
-### Added
 - Initial release.
 
-[unreleased]: https://github.com/burningtree/uson/compare/0.1.1...HEAD
-[0.1.1]: https://github.com/burningtree/uson/compare/0.1.1...0.1.0
+[Unreleased]: https://github.com/burningtree/uson/compare/0.1.1...master
+[0.1.1]: https://github.com/burningtree/uson/compare/0.1.1...0.1.2
+[0.1.1]: https://github.com/burningtree/uson/compare/0.1.0...0.1.1
