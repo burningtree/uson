@@ -36,18 +36,18 @@ function addTestSuitesFromFile(filename) {
                     if (testcase.error !== undefined) {
                         // For now just verify that an error is thrown
                         // for error tests.
-                        (function(testcase, given) {
+                        (function(mode, testcase, given) {
                           it('should throw error for test ' + j, function() {
                               assert.throws(
                                   function() {
-                                    search(given, testcase.expression);
+                                    USON.parse(testcase.expression,(mode==='object'));
                                   }, Error, testcase.expression);
                           });
-                        })(testcase, given);
+                        })(mode, testcase, given);
                     } else {
                         (function(mode, testcase, given) {
                           it('should pass test ' + j + " in mode '"+mode+"' expression: " + testcase.expression, function() {
-                              assert.deepEqual(USON.parse(testcase.expression,{mode:mode}),
+                              assert.deepEqual(USON.parse(testcase.expression,(mode==='object')),
                                                testcase.result[mode]);
                           });
                         })(mode, testcase, given);

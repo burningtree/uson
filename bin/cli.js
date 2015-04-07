@@ -17,11 +17,10 @@ if(program.args.length < 1) {
   // TODO stdin & stdout
   program.outputHelp();
   process.exit(1);
-};
+}
 
 var input = program.args.join(' ');
-var options = { mode: program.object ? 'object' : null};
-var output = USON.parse(input, options);
+var output = USON.parse(input, program.object);
 var str = null;
 
 if(program.yaml) {

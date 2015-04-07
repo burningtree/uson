@@ -25,11 +25,11 @@ function toObject(values) {
 function TreeInterpreter(options) {
   options = options || {};
   this.expandQueue = [];
-  this.mode = options.mode || 'array';
+  this.objectMode = options.objectMode || false;
 }
 
 TreeInterpreter.prototype.process = function(node) {
-  if(this.mode === 'object') {
+  if(this.objectMode) {
     return toObject(this.visit(node));
   }
   return this.visit(node);
@@ -91,8 +91,8 @@ TreeInterpreter.prototype.visit = function(node) {
 };
 
 var USON = {
-  parse: function(str, options) {
-    var interpreter = new TreeInterpreter(options);
+  parse: function(str, objectMode) {
+    var interpreter = new TreeInterpreter({ objectMode: objectMode || false });
     var tree = parser.parse(str);
     return interpreter.process(tree);
   },
