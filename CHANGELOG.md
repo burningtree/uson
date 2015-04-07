@@ -4,9 +4,21 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.3]
+### Added
+- Comments syntax `#`.
+- Use JSHint linter with "JavasScript Style Guide" config (see [https://github.com/airbnb/javascript](https://github.com/airbnb/javascript)).
+- [cli] New command-line I/O parameters: `-i, --input` and `--output`.
+- [cli] MessagePack output via `-m, --msgpack`
+- [browser] Minification now use Uglify `--mange` parameter (better compression).
+- More documentation.
+
+### Change
+- Possibility of quoted keys and use single-quote.
+
 ## [0.1.2]
 ### Added
-- Stream support for CLI.
+- Stream support for cli.
 - Basic benchmarks.
 - More documentation.
 
@@ -25,6 +37,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.1.0 - 2014-04-05
 - Initial release.
 
-[Unreleased]: https://github.com/burningtree/uson/compare/0.1.2...master
+[Unreleased]: https://github.com/burningtree/uson/compare/0.1.3...master
+[0.1.3]: https://github.com/burningtree/uson/compare/0.1.1...0.1.2
 [0.1.2]: https://github.com/burningtree/uson/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/burningtree/uson/compare/0.1.0...0.1.1
