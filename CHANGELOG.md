@@ -38,6 +38,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Initial release.
 
 [Unreleased]: https://github.com/burningtree/uson/compare/0.1.3...master
-[0.1.3]: https://github.com/burningtree/uson/compare/0.1.1...0.1.2
+[0.1.3]: https://github.com/burningtree/uson/compare/0.1.2...0.1.3
 [0.1.2]: https://github.com/burningtree/uson/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/burningtree/uson/compare/0.1.0...0.1.1

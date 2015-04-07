@@ -29,6 +29,7 @@ This is initial implementation written in Javascript and node.js. Grammar is wri
 ### Introduction
 
 #### Principles
+* Superset of JSON.
 * Whitespace is not significant.
 * String quoting `"` is optional.
 * In Array or Object, comma `,` can be replaced by whitespace ` `.
