@@ -30,7 +30,7 @@ This is initial implementation written in Javascript and node.js. Grammar is wri
 
 #### Principles
 * Whitespace is not significant.
-* String quoting is optional.
+* String quoting `"` is optional.
 * In Array or Object, comma `,` can be replaced by whitespace ` `.
 * Object assignation with colon `:` can be repeated to create nested objects.
 
@@ -38,6 +38,7 @@ This is initial implementation written in Javascript and node.js. Grammar is wri
 There are two output modes:
 * `array` (default) - Output as array.
 * `object` - Output as combined object. Suitable for use in the command line.
+* `first` - Output first mixed type. This mode accepts any JSON.
 
 ### Example
 ```
@@ -301,15 +302,18 @@ Complete usage:
 ```
 $ uson --h
 
-  Usage: uson [options] [input]
+  Usage: cli [options] [expression]
 
   Options:
 
-    -h, --help     output usage information
-    -V, --version  output the version number
-    -p, --pretty   Pretty print output (only JSON)
-    -y, --yaml     Use YAML dialect instead of JSON
-    -o, --object   Object mode
+    -h, --help           output usage information
+    -V, --version        output the version number
+    -i, --input <file>   Use input file
+        --output <file>  Write output to file instead of stdout
+    -p, --pretty         Pretty print output (only JSON)
+    -y, --yaml           Return output in YAML
+    -o, --object         Object mode
+
 ```
 
 ### Streams support

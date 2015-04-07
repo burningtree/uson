@@ -9,7 +9,7 @@ control
 
 keyExpr = k:key tail:('[' k:key? ']' {return k || true})* {return [[k]].concat(tail)}
 
-key = k:[-_a-zA-Z0-9]+ {return k.join('')}
+key = k:(string / quotedString) {return k}
 
 value
   = number
@@ -36,9 +36,14 @@ null = 'null' {return null}
 
 regExp = '/' pattern:[^/]* '/' flags:[i]* {return new RegExp(pattern.join(''), flags)}
 
-number = v:[0-9\.\-]+ {return parseFloat(v.join(''))}
+number = v:[0-9\.\-\+]+ {return parseFloat(v.join(''))}
 
-quotedString = '"' s:[^"]+ '"' {return s.join('')}
+quotedString
+  = singleQuotedString
+  / doubleQuotedString
+
+doubleQuotedString = '"' s:[^"]+ '"' {return s.join('')}
+singleQuotedString = "'" s:[^']+ "'" {return s.join('')}
 
 string = v:[-_a-zA-Z0-9]+ {return v.join('')}
 
