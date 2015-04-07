@@ -1,12 +1,13 @@
 #!/usr/bin/env node
+'use strict';
 
 var USON = require('../');
 var program = require('commander');
 var yaml = require('js-yaml');
-var version = require('../package.json').version;
+var pversion = require('../package.json').version;
 
 program
-  .version(version)
+  .version(pversion)
   .usage('[options] <input>')
   .option('-p, --pretty', 'Pretty print output (only JSON)')
   .option('-y, --yaml', 'Use YAML dialect instead of JSON')
@@ -30,13 +31,13 @@ if(program.args.length < 1) {
   process.stdin.on('data', function (buf) {
     var str = buf.toString().trim();
     if(!str) { return; }
-    process.stdout.write(parse(str));
+    process.stdout.write(parse(str)+'\n');
   });
   process.stdin.on('end', function () {
     process.exit();
   });
 
 } else {
-  process.stdout.write(parse(program.args.join(' ')));
+  process.stdout.write(parse(program.args.join(' '))+'\n');
 }
 

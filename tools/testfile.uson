@@ -1,0 +1,3 @@
+b: [ 1 2 3 ]
+a : 45    # this is comment
+{ console: true }

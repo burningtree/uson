@@ -5,6 +5,7 @@ expr = ws out:(v:control ws {return v})* ws {return out}
 control
   = k:keyExpr tail:(ws ':' ws v:control {return v}) {return {type:'ObjectAssign',value:[k].concat(tail)}}
   / value
+  / comment
 
 keyExpr = k:key tail:('[' k:key? ']' {return k || true})* {return [[k]].concat(tail)}
 
@@ -20,6 +21,8 @@ value
   / regExp
   / quotedString
   / string
+
+comment = '#' [^\r\n]+ {return {$$destroy:true}}
 
 object = '{' v:expr '}' {return {type:'ObjectAdd',value:v}}
 

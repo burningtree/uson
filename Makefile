@@ -1,9 +1,12 @@
 NODE = node
 PEGJS = node_modules/.bin/pegjs
 BROWSERIFY = node_modules/.bin/browserify
-UGLIFY =  node_modules/.bin/uglifyjs
+UGLIFY = node_modules/.bin/uglifyjs
+LINTER = node_modules/.bin/jshint
 
-all: peg pack minify
+all: lint peg pack minify
+
+browser: pack minify
 
 peg: uson.pegjs
 	$(PEGJS) -o speed $< dist/parser.js
@@ -16,4 +19,7 @@ minify:
 
 bench:
 	$(NODE) benchmark/benchmark.js
+
+lint:
+	$(LINTER) *.js bin/*.js
 

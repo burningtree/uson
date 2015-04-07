@@ -14,14 +14,26 @@ This is initial implementation written in Javascript and node.js. Grammar is wri
 
 ## μson Overview
 
+* [Introduction](#introduction)
+  * [Principles](#principles)
+  * [Output modes](#output-modes)
 * [Example](#example)
 * [Basic usage](#basic-usage)
   * [Standart types](#standart-types)
   * [Arrays](#arrays)
   * [Objects](#objects)
   * [Nested objects (expanding)](#nested-objects-expanding)
+  * [Comments](#comments)
 * [Grammar](#grammar)
 
+### Introduction
+
+#### Principles
+* Whitespace is not significant.
+* String quoting is optional.
+* In Array or Object, comma `,` can be replaced by whitespace ` `.
+
+#### Output modes
 There are two output modes:
 * `array` (default) - Output as array.
 * `object` - Output as combined object. Suitable for use in the command line.
@@ -181,6 +193,19 @@ become:
   }
 ]
 ```
+
+#### Comments
+Comments beginning with `#` and terminates on end of line.
+
+```
+array:[1 2 3] # this is comment
+```
+
+Output:
+```json
+[1,2,3]
+```
+
 
 ### Grammar
 See [uson.pegjs](uson.pegjs) file.
