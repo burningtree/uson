@@ -13,21 +13,30 @@ program
   .option('-o, --object', 'Object mode')
   .parse(process.argv);
 
+function parse(input) {
+  var output = USON.parse(input, program.object);
+  var space = (program.pretty ? 2 : false);
+  var str = null;
+
+  if(program.yaml) {
+    str = yaml.dump(output);
+  } else {
+    str = JSON.stringify(output, null, space);
+  }
+  return str;
+}
+
 if(program.args.length < 1) {
-  // TODO stdin & stdout
-  program.outputHelp();
-  process.exit(1);
-}
+  process.stdin.on('data', function (buf) {
+    var str = buf.toString().trim();
+    if(!str) { return; }
+    process.stdout.write(parse(str));
+  });
+  process.stdin.on('end', function () {
+    process.exit();
+  });
 
-var input = program.args.join(' ');
-var output = USON.parse(input, program.object);
-var str = null;
-
-if(program.yaml) {
-  str = yaml.dump(output);
 } else {
-  str = JSON.stringify(output, null, (program.pretty ? 2 : false));
+  process.stdout.write(parse(program.args.join(' ')));
 }
-process.stdout.write(str);
-
 

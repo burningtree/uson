@@ -269,7 +269,7 @@ Complete usage:
 ```
 $ uson --h
 
-  Usage: uson [options] <input>
+  Usage: uson [options] [input]
 
   Options:
 
@@ -278,6 +278,19 @@ $ uson --h
     -p, --pretty   Pretty print output (only JSON)
     -y, --yaml     Use YAML dialect instead of JSON
     -o, --object   Object mode
+```
+
+### Streams support
+
+If you dont specify any input or options then input is taken from standart stdin. This can be used for "piping" results:
+
+```
+$ echo "a b c:[a:42]" | uson | jq .[2].c[0].a
+```
+Result:
+
+```
+42
 ```
 
 ## Inspiration
