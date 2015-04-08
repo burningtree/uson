@@ -3,10 +3,14 @@
  * ============
  */
 
-/* ----- 2. μson Grammar ----- */
+/* ----- μson Grammar ----- */
 
 uson_text
-  = head:expr tail:(v:expr {return v})* {return [head].concat(tail)}
+  = head:expr? ws tail:expr*
+    {
+      if(head==null && text()!=="null"){ return [] };
+      return [head].concat(tail);
+    }
 
 expr = ws v:value ws {return v}
 
@@ -21,7 +25,7 @@ ws_char         = [ \t\n\r]
 
 ws "whitespace" = ws_char* comment?
 
-/* ----- 3. Values ----- */
+/* ----- Values ----- */
 
 value
   = false
@@ -37,7 +41,7 @@ false = "false" { return false; }
 null  = "null"  { return null;  }
 true  = "true"  { return true;  }
 
-/* ----- 4. Objects ----- */
+/* ----- Objects ----- */
 
 object
   = begin_object
@@ -61,10 +65,7 @@ member
       return { name: name, value: value };
     }
 
-assign
-  = m:member {var obj={}; obj[m.name] = m.value; return obj}
-
-/* ----- 5. Arrays ----- */
+/* ----- Arrays ----- */
 
 array
   = begin_array
@@ -76,7 +77,7 @@ array
     end_array
     { return values !== null ? values : []; }
 
-/* ----- 6. Numbers ----- */
+/* ----- Numbers ----- */
 
 number "number"
   = minus? int frac? exp? { return parseFloat(text()); }
@@ -91,7 +92,7 @@ minus         = "-"
 plus          = "+"
 zero          = "0"
 
-/* ----- 7. Strings ----- */
+/* ----- Strings ----- */
 
 string "string"
   = double_quoted_string
@@ -118,6 +119,7 @@ escaped_char
       / "'"
       / "\\"
       / "/"
+      / "#"
       / "b" { return "\b"; }
       / "f" { return "\f"; }
       / "n" { return "\n"; }
@@ -130,11 +132,16 @@ escaped_char
     { return sequence; }
 
 escape                 = "\\"
-unescaped_simple       = [a-zA-Z0-9\?\-_|]
+unescaped_simple       = [\x21\x24-\x2B\x2D-\x39\x3B-\x5A\x5E-\x7A\x7C-\u10FFFF]
 unescaped_double_quote = [\x20-\x21\x23-\x5B\x5D-\u10FFFF]
 unescaped_single_quote = [\x20-\x26\x28-\x5B\x5D-\u10FFFF]
 
-/* ----- 8. Comments ----- */
+/* ----- Assignations ----- */
+
+assign
+  = m:member {var obj={}; obj[m.name] = m.value; return obj}
+
+/* ----- Comments ----- */
 
 comment = comment_start [^\n\r\u2028\u2029]*
 

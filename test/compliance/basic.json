@@ -1,4 +1,29 @@
 [{
+  "name": "empty input",
+  "cases": [
+    {
+      "expression": "",
+      "result": {
+        "array": [],
+        "object": {}
+      }
+    },
+    {
+      "expression": "   ",
+      "result": {
+        "array": [],
+        "object": {}
+      }
+    },
+    {
+      "expression": "\n          ",
+      "result": {
+        "array": [],
+        "object": {}
+      }
+    }
+  ]
+},{
   "name": "simple",
   "cases": [
     {

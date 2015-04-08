@@ -49,7 +49,12 @@ function addTestSuitesFromFile(filename) {
                     } else {
                       if(testcase.result[mode]){
                         (function(mode, testcase, given, sp) {
-                          it('should pass test ' + j + " expression: " + testcase.expression + ' (m:'+mode+')', function() {
+                          var expr = testcase.expression;
+                          if(expr.length > 20){
+                            expr = expr.substr(0, 20) + ' .. (truncated)';
+                          }
+                          expr = expr.match('\n') ? expr.split("\n")[0] + ' .. (multiline)' : expr;
+                          it('should pass test ' + j + " expression: " + expr  + ' (m:'+mode+')', function() {
                               assert.deepEqual(USON.parse(testcase.expression,mode),
                                                testcase.result[mode]);
                           });

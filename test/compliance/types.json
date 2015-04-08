@@ -5,35 +5,40 @@
       "expression": "1",
       "result": {
         "array": [ 1 ] ,
-        "object": { "0": 1 }
+        "object": { "0": 1 },
+        "json": 1
       }
     },
     {
       "expression": "42.42",
       "result": {
         "array": [ 42.42 ] ,
-        "object": { "0": 42.42 }
+        "object": { "0": 42.42 },
+        "json": 42.42
       }
     },
     {
       "expression": "-50.43",
       "result": {
         "array": [ -50.43 ] ,
-        "object": { "0": -50.43 }
+        "object": { "0": -50.43 },
+        "json": -50.43
       }
     },
     {
       "expression": "1000000.0001",
       "result": {
         "array": [ 1000000.0001 ],
-        "object": { "0": 1000000.0001 }
+        "object": { "0": 1000000.0001 },
+        "json": 1000000.0001
       }
     },
     {
       "expression": "10e5",
       "result": {
         "array": [ 10e5 ],
-        "object": { "0": 10e5 }
+        "object": { "0": 10e5 },
+        "json": 10e5
       }
     }
   ]
@@ -44,7 +49,16 @@
       "expression": "abc",
       "result": {
         "array": [ "abc" ] ,
-        "object": { "0": "abc" }
+        "object": { "0": "abc" },
+        "json": "abc"
+      }
+    },
+    {
+      "expression": "abc def",
+      "result": {
+        "array": [ "abc", "def" ] ,
+        "object": { "0": "abc", "1": "def" },
+        "json": "abc"
       }
     },
     {
@@ -97,7 +111,8 @@
       "expression": "null",
       "result": {
         "array": [ null ] ,
-        "object": { "0": null }
+        "object": { "0": null },
+        "json": null
       }
     }
   ]
@@ -108,7 +123,8 @@
       "expression": "true",
       "result": {
         "array": [ true ] ,
-        "object": { "0": true }
+        "object": { "0": true },
+        "json": true
       }
     }
   ]
@@ -119,7 +135,8 @@
       "expression": "false",
       "result": {
         "array": [ false ] ,
-        "object": { "0": false }
+        "object": { "0": false },
+        "json": false
       }
     }
   ]
@@ -130,7 +147,8 @@
       "expression": "[a]",
       "result": {
         "array": [["a"]],
-        "object": { "0": ["a"] }
+        "object": { "0": ["a"] },
+        "json": ["a"]
       }
     },
     {
@@ -188,7 +206,7 @@
     }
   ]
 },{
-  "name": "simple object",
+  "name": "assign",
   "cases": [
     {
       "expression": "a:1",
@@ -210,30 +228,93 @@
         "array": [ { "a":1 }, { "b":2 }, { "c":3 } ],
         "object": { "a":1, "b":2, "c":3 }
       }
-    }
-  ]
-},{
-  "name": "comments",
-  "cases": [
+    },
     {
-      "expression": "a:1 # comment",
+      "expression": "'a':1",
       "result": {
         "array": [ { "a":1 } ],
         "object": { "a":1 }
       }
     },
     {
-      "expression": "hello: [a # b c]\n# good\n tone ]",
+      "expression": "\"a\":1",
       "result": {
-        "array": [ { "hello": ["a", "tone"] } ],
-        "object": { "hello": ["a", "tone"] }
+        "array": [ { "a":1 } ],
+        "object": { "a":1 }
       }
     },
     {
-      "expression": "{hello: [#john ]\n] #node\n} 42 #brak\nbecause",
+      "expression": "~!@$%^&*()-:1",
       "result": {
-        "array": [ { "hello": [] }, 42, "because" ],
-        "object": { "0": 42, "1": "because", "hello": [] } 
+        "array": [ { "~!@$%^&*()-":1 } ],
+        "object": { "~!@$%^&*()-": 1 }
+      }
+    }
+  ]
+},{
+  "name": "comments",
+  "cases": [
+    {
+      "expression": "#",
+      "result": {
+        "array": [],
+        "object": {}
+      }
+    },
+    {
+      "expression": "a:\\#",
+      "result": {
+        "array": [ { "a": "#" } ],
+        "object": { "a": "#" }
+      }
+    },
+    {
+      "expression": "a:'\\#1'",
+      "result": {
+        "array": [ { "a": "#1" } ],
+        "object": { "a": "#1" }
+      }
+    },
+    {
+      "expression": "a:1 # a",
+      "result": {
+        "array": [ { "a":1 } ],
+        "object": { "a":1 }
+      }
+    },
+    {
+      "expression": "  # a",
+      "result": {
+        "array": [],
+        "object": {}
+      }
+    },
+    {
+      "expression": "#a",
+      "result": {
+        "array": [],
+        "object": {}
+      }
+    },
+    {
+      "expression": "x: [a # b c]\n# good\n tone ]",
+      "result": {
+        "array": [ { "x": ["a", "tone"] } ],
+        "object": { "x": ["a", "tone"] }
+      }
+    },
+    {
+      "expression": "{x: [#y ]\n] #n\n} 42 #^\n@",
+      "result": {
+        "array": [ { "x": [] }, 42, "@" ],
+        "object": { "0": 42, "1": "@", "x": [] } 
+      }
+    },
+    {
+      "expression": "{x: [#y ]\n] #n\n} 42 #^\n@",
+      "result": {
+        "array": [ { "x": [] }, 42, "@" ],
+        "object": { "0": 42, "1": "@", "x": [] } 
       }
     }
   ]
