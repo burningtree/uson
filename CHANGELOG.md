@@ -4,8 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [0.2.0]
+## [0.2.1]
+### Added
+- More tests.
 
+### Changed
+- Extend unescaped string characters.
+- Stylistic update of grammar and docs.
+
+## [0.2.0]
 ### Added
 - New `json` mode with JSON mixed root types compatibility.
 
@@ -50,7 +57,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.1.0 - 2014-04-05
 - Initial release.
 
-[Unreleased]: https://github.com/burningtree/uson/compare/0.2.0...master
+[Unreleased]: https://github.com/burningtree/uson/compare/0.2.1...master
+[0.2.1]: https://github.com/burningtree/uson/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/burningtree/uson/compare/0.1.3...0.2.0
 [0.1.3]: https://github.com/burningtree/uson/compare/0.1.2...0.1.3
 [0.1.2]: https://github.com/burningtree/uson/compare/0.1.1...0.1.2
