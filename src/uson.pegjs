@@ -17,7 +17,7 @@ end_object      = ws "}" ws
 name_separator  = ws ":" ws
 value_separator = ws [ ,]* ws
 comment_start   = "#"
-ws_char = [ \t\n\r]
+ws_char         = [ \t\n\r]
 
 ws "whitespace" = ws_char* comment?
 

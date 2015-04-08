@@ -8,7 +8,7 @@ This is initial implementation written in Javascript and node.js. Grammar is wri
 * [μson Overview](#%CE%BCson-overview)
 * [Node.js module](#nodejs-module)
 * [Browser usage](#browser-usage)
-* [CLI (command-line) tool](#cli-command-line-tool)
+* [Command-line (CLI) tool](#cli-command-line-tool)
 * [Inspiration](#inspiration)
 * [Author](#author)
 
@@ -89,19 +89,18 @@ and `object` mode result:
 ```
 
 ### Basic usage
-
 ```
 expr1 expr2 expr3 ..
 ```
 
-Supported types (JSON):
-* string
-* number
-* array
-* object
-* true
+Supported types:
 * false
 * null
+* true
+* array
+* object
+* number
+* string
 
 Optional:
 * regexp TODO
@@ -217,9 +216,22 @@ Output:
 
 
 ### Grammar
-See [uson.pegjs](src/uson.pegjs) file.
+Basic grammar is adopted from JSON:
 
-* [Visualization of uson grammar](http://dundalek.com/GrammKit/#https://raw.githubusercontent.com/burningtree/uson/master/src/uson.pegjs).
+```
+begin_array     = ws "[" ws
+begin_object    = ws "{" ws
+end_array       = ws "]" ws
+end_object      = ws "}" ws
+name_separator  = ws ":" ws
+value_separator = ws [ ,]* ws
+comment_start   = "#"
+ws_char         = [ \t\n\r]
+```
+
+For more info see [uson.pegjs](src/uson.pegjs) file.
+
+[Visualization of uson grammar](http://dundalek.com/GrammKit/#https://raw.githubusercontent.com/burningtree/uson/master/src/uson.pegjs).
 
 ## Node.js module
 
@@ -243,9 +255,10 @@ var USON = require('uson');
 console.log(USON.parse('a b c'));
 ```
 Output:
-```
+```json
 [ 'a', 'b', 'c' ]
 ```
+
 
 ## Browser usage
 
@@ -264,6 +277,15 @@ $ bower install uson
 
 ## CLI (command-line) tool
 
+* [Installation](#installation-1)
+* [Usage](#usage-2)
+* [Example](#example-1)
+* [Options](#options)
+  * [Result format (optional)](#result-format-optional)
+* [Streams support (pipe)](#streams-support-pipe)
+* [Complete usage](#complete-usage)
+
+
 ### Installation
 You can install node.js CLI utility via npm:
 ```
@@ -275,17 +297,17 @@ $ npm install -g uson
 $ uson [options] [expression]
 ```
 
-#### Example
+### Example
 ```
 $ uson 'user:john age:42'
 ```
 
 Return:
-```
+```json
 [{"user":"john"},{"age":42}]
 ```
 
-#### Basic options
+### Options
 For `object` mode use option `-o, --object`.
 
 For `json` mode use option `-j, --json`.
@@ -303,12 +325,24 @@ $ uson -yo 'endpoint:it:wikipedia'
 ```
 
 Return:
-```
+```yaml
 endpoint:
   id: wikipedia
 ```
 
-#### Complete usage:
+### Streams support (pipe)
+If you dont specify any input or options then input is taken from standart stdin. This can be used for "piping" results:
+
+```
+$ echo "a b c:[a:42]" | uson | jq .[2].c[0].a
+```
+Result:
+
+```
+42
+```
+
+### Complete usage
 ```
 $ uson --h
 
@@ -326,19 +360,6 @@ $ uson --h
     -o, --object         Object mode
     -j, --json           JSON-like mode
 
-```
-
-### Streams support
-
-If you dont specify any input or options then input is taken from standart stdin. This can be used for "piping" results:
-
-```
-$ echo "a b c:[a:42]" | uson | jq .[2].c[0].a
-```
-Result:
-
-```
-42
 ```
 
 ## Inspiration

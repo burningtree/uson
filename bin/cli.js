@@ -14,8 +14,8 @@ program
   .option('-i, --input <file>', 'Load data from file')
   .option('    --output <file>', 'Write output to file')
   .option('-p, --pretty', 'Pretty print output (only JSON)')
-  .option('-y, --yaml', 'Return output in YAML')
-  .option('-m, --msgpack', 'Return output in msgpack')
+  .option('-y, --yaml', 'Return output in YAML (optional)')
+  .option('-m, --msgpack', 'Return output in msgpack (optional)')
   .option('-o, --object', 'Object mode')
   .option('-j, --json', 'JSON-like mode')
   .parse(process.argv);
