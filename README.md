@@ -1,5 +1,4 @@
-# μson (uson) 
-[![Build Status](https://travis-ci.org/burningtree/uson.svg)](https://travis-ci.org/burningtree/uson) [![Dependency Status](https://david-dm.org/burningtree/uson.svg)](https://david-dm.org/burningtree/uson) [![npm](https://img.shields.io/npm/v/uson.svg)](https://www.npmjs.com/package/uson)
+# μson (uson) [![Build Status](https://travis-ci.org/burningtree/uson.svg)](https://travis-ci.org/burningtree/uson) [![Dependency Status](https://david-dm.org/burningtree/uson.svg)](https://david-dm.org/burningtree/uson) [![npm](https://img.shields.io/npm/v/uson.svg)](https://www.npmjs.com/package/uson)
 
 A compact human-readable data serialization format especially designed for shell.
 
@@ -8,7 +7,7 @@ This is initial implementation written in Javascript and node.js. Grammar is wri
 * [μson Overview](#%CE%BCson-overview)
 * [Node.js module](#nodejs-module)
 * [Browser usage](#browser-usage)
-* [Command-line (CLI) tool](#cli-command-line-tool)
+* [Command-line tool (CLI)](#command-line-tool-cli)
 * [Inspiration](#inspiration)
 * [Author](#author)
 
@@ -29,6 +28,7 @@ This is initial implementation written in Javascript and node.js. Grammar is wri
 ### Introduction
 
 #### Principles
+
 * Superset of JSON (every JSON is valid μson).
 * Whitespace is not significant.
 * String quoting `"` is optional.
@@ -36,12 +36,14 @@ This is initial implementation written in Javascript and node.js. Grammar is wri
 * Assignation with colon `:` can be repeated to create nested objects.
 
 #### Output modes
+
 There are three output modes:
 * `array` (default) - Output as array.
 * `object` - Output as combined object. Suitable for use in the command line.
 * `json` - Output first mixed type. 100% compatible with JSON.
 
 ### Example
+
 ```
 endpoint:id:wikipedia pages:[Malta Prague "New York"]
 ```
@@ -89,6 +91,7 @@ and `object` mode result:
 ```
 
 ### Basic usage
+
 ```
 expr1 expr2 expr3 ..
 ```
@@ -197,6 +200,7 @@ become:
 ```
 
 #### Comments
+
 Comments beginning with `#` and terminates on end of line.
 
 ```
@@ -214,8 +218,8 @@ Output:
 }
 ```
 
-
 ### Grammar
+
 Basic grammar is adopted from JSON:
 
 ```
@@ -235,11 +239,17 @@ For more info see [uson.pegjs](src/uson.pegjs) file.
 
 ## Node.js module
 
+* [Compatibility](#compatibility)
+* [Installation](#installation)
+* [Usage](#usage)
+
 ### Compatibility
+
 * node.js 0.10+
 * [io.js](https://iojs.org) v1.0.4+
 
 ### Installation
+
 ```
 $ npm instal uson
 ```
@@ -255,7 +265,7 @@ var USON = require('uson');
 console.log(USON.parse('a b c'));
 ```
 Output:
-```json
+```javascript
 [ 'a', 'b', 'c' ]
 ```
 
@@ -267,6 +277,7 @@ $ bower install uson
 ```
 
 ### Usage
+
 ```html
   <script src="bower_components/uson/dist/uson.min.js"></script>
   <script>
@@ -275,7 +286,7 @@ $ bower install uson
   </script>
 ```
 
-## CLI (command-line) tool
+## Command-line tool (CLI)
 
 * [Installation](#installation-1)
 * [Usage](#usage-2)
@@ -287,17 +298,20 @@ $ bower install uson
 
 
 ### Installation
+
 You can install node.js CLI utility via npm:
 ```
 $ npm install -g uson
 ```
 
 ### Usage
+
 ```
 $ uson [options] [expression]
 ```
 
 ### Example
+
 ```
 $ uson 'user:john age:42'
 ```
@@ -308,6 +322,7 @@ Return:
 ```
 
 ### Options
+
 For `object` mode use option `-o, --object`.
 
 For `json` mode use option `-j, --json`.
@@ -315,6 +330,7 @@ For `json` mode use option `-j, --json`.
 If you want prettyfied output, use option `-p, --pretty`.
 
 #### Result format (optional)
+
 You can use this output formats:
 - YAML: `-y, --yaml`
 - msgpack: `-m, --msgpack`:
@@ -331,6 +347,7 @@ endpoint:
 ```
 
 ### Streams support (pipe)
+
 If you dont specify any input or options then input is taken from standart stdin. This can be used for "piping" results:
 
 ```
@@ -343,6 +360,7 @@ Result:
 ```
 
 ### Complete usage
+
 ```
 $ uson --h
 
