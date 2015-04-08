@@ -29,8 +29,8 @@ minify: dist/uson.pack.js
 bench: benchmark/benchmark.js
 	$(NODE) $<
 
-lint: *.js bin/*.js test/index.js
-	$(LINTER) $<
+lint: 
+	$(LINTER) index.js bin/cli.js test/index.js test/cli.js
 
 test-silent:
 	$(MOCHA) -R dot

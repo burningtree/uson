@@ -2,22 +2,22 @@
 'use strict';
 
 var fs = require('fs');
-var path = require('path');
 var USON = require('../');
 var program = require('commander');
 var pversion = require('../package.json').version;
-var plugins = {};
 
 program
   .version(pversion)
   .usage('[options] [expression]')
+  .option('-o, --object', '"object" mode')
+  .option('-j, --json', '"json" mode')
   .option('-i, --input <file>', 'Load data from file')
   .option('    --output <file>', 'Write output to file')
   .option('-p, --pretty', 'Pretty print output (only JSON)')
   .option('-y, --yaml', 'Return output in YAML (optional)')
   .option('-m, --msgpack', 'Return output in msgpack (optional)')
-  .option('-o, --object', 'Object mode')
-  .option('-j, --json', 'JSON-like mode')
+  .option('    --hex', 'Output in hex encoding')
+  .option('    --base64', 'Output in base64 encoding')
   .parse(process.argv);
 
 function error(str) {
@@ -25,20 +25,22 @@ function error(str) {
   process.exit(1);
 }
 
-function loadPlugins() {
+function loadPlugins(program) {
+  var plugins = {};
   var config = { yaml: 'js-yaml', msgpack: 'msgpack' };
   Object.keys(config).forEach(function(k) {
     if(program[k]) {
       try { plugins[k] = require(config[k]); }
       catch (e) {
-        error("Cannot load package: "+config[k]+" ("+k+" mode)\n"+
-              "Installation instruction: npm install -g "+config[k]);
+        error('Cannot load package: '+config[k]+' ('+k+' mode)\n'+
+              'Installation instruction: npm install -g '+config[k]);
       }
     }
   });
+  return plugins;
 }
 
-function parse(input) {
+function parse(input, plugins) {
   var mode = (program.object ? 'object' : (program.json ? 'json' : false));
   var output = USON.parse(input, mode);
   var space = (program.pretty ? 2 : false);
@@ -49,7 +51,7 @@ function parse(input) {
   if(program.yaml) {
     return plugins.yaml.dump(output);
   }
-  return JSON.stringify(output, null, space);
+  return JSON.stringify(output, null, space)+'\n';
 }
 
 function writeData(data) {
@@ -61,14 +63,19 @@ function writeData(data) {
     console.log('File saved: '+program.output);
     return;
   }
-  process.stdout.write(data + '\n');
+  if(program.hex) {
+    data = new Buffer(data).toString('hex')+'\n';
+  } else if(program.base64) {
+    data = new Buffer(data).toString('base64')+'\n';
+  }
+  process.stdout.write(data);
 }
 
-function listenStdin() {
+function listenStdin(plugins) {
   process.stdin.on('data', function (buf) {
     var str = buf.toString().trim();
     if(!str) { return; }
-    writeData(parse(str));
+    writeData(parse(str, plugins));
   });
   process.stdin.on('end', function () {
     process.exit();
@@ -76,19 +83,20 @@ function listenStdin() {
 }
 
 function runProgram(program) {
-  loadPlugins();
+  var plugins = loadPlugins(program);
+
   if(program.input) {
     if(!fs.existsSync(program.input)) {
       throw new Error('File not exists: ' + program.input);
     }
     var data = fs.readFileSync(program.input).toString();
-    writeData(parse(data));
+    writeData(parse(data, plugins));
   }
 
   else if(program.args.length < 1) {
     listenStdin();
   } else {
-    writeData(parse(program.args.join(' ')));
+    writeData(parse(program.args.join(' '), plugins));
   }
 }
 

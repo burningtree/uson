@@ -12,7 +12,7 @@ var loadFixture = function(fn, cb) {
   });
 };
 
-describe('Additional tests', function() {
+describe('test/index', function() {
 
   it('should parse JSON Test Pattern: pass #1', function(done) {
     var fn = path.resolve(__dirname,'fixtures','json-pass1.json');
@@ -27,6 +27,5 @@ describe('Additional tests', function() {
       done();
     });
   });
-
 });
 

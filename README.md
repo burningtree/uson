@@ -332,6 +332,7 @@ If you want prettyfied output, use option `-p, --pretty`.
 #### Result format (optional)
 
 You can use this output formats:
+- JSON (default)
 - YAML: `-y, --yaml`
 - msgpack: `-m, --msgpack`:
 
