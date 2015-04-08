@@ -2,11 +2,11 @@
 'use strict';
 
 var fs = require('fs');
+var path = require('path');
 var USON = require('../');
-var yaml = require('js-yaml');
-var msgpack = require('msgpack');
 var program = require('commander');
 var pversion = require('../package.json').version;
+var plugins = {};
 
 program
   .version(pversion)
@@ -20,16 +20,34 @@ program
   .option('-j, --json', 'JSON-like mode')
   .parse(process.argv);
 
+function error(str) {
+  console.log('Error: %s', str);
+  process.exit(1);
+}
+
+function loadPlugins() {
+  var config = { yaml: 'js-yaml', msgpack: 'msgpack' };
+  Object.keys(config).forEach(function(k) {
+    if(program[k]) {
+      try { plugins[k] = require(config[k]); }
+      catch (e) {
+        error("Cannot load package: "+config[k]+" ("+k+" mode)\n"+
+              "Installation instruction: npm install -g "+config[k]);
+      }
+    }
+  });
+}
+
 function parse(input) {
   var mode = (program.object ? 'object' : (program.json ? 'json' : false));
   var output = USON.parse(input, mode);
   var space = (program.pretty ? 2 : false);
 
   if(program.msgpack) {
-    return msgpack.pack(output);
+    return plugins.msgpack.pack(output);
   }
   if(program.yaml) {
-    return yaml.dump(output);
+    return plugins.yaml.dump(output);
   }
   return JSON.stringify(output, null, space);
 }
@@ -37,8 +55,7 @@ function parse(input) {
 function writeData(data) {
   if(program.output) {
     if(fs.existsSync(program.output)) {
-      console.log('File exists: '+program.output+', exiting ..');
-      process.exit(1);
+      return error('File exists: '+program.output+', exiting ..');
     }
     fs.writeFileSync(program.output, data);
     console.log('File saved: '+program.output);
@@ -59,6 +76,7 @@ function listenStdin() {
 }
 
 function runProgram(program) {
+  loadPlugins();
   if(program.input) {
     if(!fs.existsSync(program.input)) {
       throw new Error('File not exists: ' + program.input);
