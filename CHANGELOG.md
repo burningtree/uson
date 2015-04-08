@@ -4,7 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [0.1.4]
+## [0.2.0]
 ### Changed
 - Refactored PEGjs grammar. Now its based on JSON version.
 - Most logic moved to PEGjs grammar.
@@ -46,8 +46,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.1.0 - 2014-04-05
 - Initial release.
 
-[Unreleased]: https://github.com/burningtree/uson/compare/0.1.4...master
-[0.1.3]: https://github.com/burningtree/uson/compare/0.1.3...0.1.4
+[Unreleased]: https://github.com/burningtree/uson/compare/0.2.0...master
+[0.1.3]: https://github.com/burningtree/uson/compare/0.1.3...0.2.0
 [0.1.3]: https://github.com/burningtree/uson/compare/0.1.2...0.1.3
 [0.1.2]: https://github.com/burningtree/uson/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/burningtree/uson/compare/0.1.0...0.1.1

@@ -272,7 +272,7 @@ $ npm install -g uson
 
 ### Usage
 ```
-uson [options] [expression]
+$ uson [options] [expression]
 ```
 
 #### Example
@@ -293,9 +293,13 @@ For `json` mode use option `-j, --json`.
 If you want prettyfied output, use option `-p, --pretty`.
 
 #### Result format (optional)
-You can use YAML or msgpack as output format by option `-y, --yaml` or `-m, --msgpack` respectively:
+You can use this output formats:
+- YAML: `-y, --yaml`
+- msgpack: `-m, --msgpack`:
+
+For example, this returns YAML in Object mode:
 ```
-$ uson -yo 'endpoint:it:wikipedia' # returns YAML in Object mode
+$ uson -yo 'endpoint:it:wikipedia'
 ```
 
 Return:
