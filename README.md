@@ -271,35 +271,40 @@ $ npm install -g uson
 ```
 
 ### Usage
-Usage is simple:
+```
+uson [options] [expression]
+```
 
+#### Example
 ```
 $ uson 'user:john age:42'
 ```
+
 Return:
 ```
 [{"user":"john"},{"age":42}]
 ```
 
-For `object` mode use option `-o` or `--object`.
+#### Basic options
+For `object` mode use option `-o, --object`.
 
-If you want prettyfied output, use option `-p` or `--pretty`.
+For `json` mode use option `-j, --json`.
 
-You can use YAML as output format by option `-y` or `--yaml`:
+If you want prettyfied output, use option `-p, --pretty`.
+
+#### Result format (optional)
+You can use YAML or msgpack as output format by option `-y, --yaml` or `-m, --msgpack` respectively:
 ```
-$ uson -y -o 'endpoint:id:wikipedia pages:[Malta Prague "New York"]'
+$ uson -yo 'endpoint:it:wikipedia' # returns YAML in Object mode
 ```
+
 Return:
 ```
 endpoint:
   id: wikipedia
-pages:
-  - Malta
-  - Prague
-  - New York
 ```
 
-Complete usage:
+#### Complete usage:
 ```
 $ uson --h
 
@@ -312,8 +317,8 @@ $ uson --h
     -i, --input <file>   Load data from file
         --output <file>  Write output to file
     -p, --pretty         Pretty print output (only JSON)
-    -y, --yaml           Return output in YAML
-    -m, --msgpack        Return output in msgpack
+    -y, --yaml           Return output in YAML (optional)
+    -m, --msgpack        Return output in msgpack (optional)
     -o, --object         Object mode
     -j, --json           JSON-like mode
 

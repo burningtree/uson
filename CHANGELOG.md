@@ -4,6 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.4]
+### Changed
+- Refactored PEGjs grammar. Now its based on JSON version.
+- Most logic moved to PEGjs grammar.
+- Fixed comments parsing.
+
+### Removed
+- [cli] Packages for MsgPack and YAML is now optional.
+
 ## [0.1.3]
 ### Added
 - Comments syntax `#`.
@@ -13,7 +22,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - [browser] Minification now use Uglify `--mange` parameter (better compression).
 - More documentation.
 
-### Change
+### Changed
 - Possibility of quoted keys and use single-quote.
 
 ## [0.1.2]
@@ -37,7 +46,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.1.0 - 2014-04-05
 - Initial release.
 
-[Unreleased]: https://github.com/burningtree/uson/compare/0.1.3...master
+[Unreleased]: https://github.com/burningtree/uson/compare/0.1.4...master
+[0.1.3]: https://github.com/burningtree/uson/compare/0.1.3...0.1.4
 [0.1.3]: https://github.com/burningtree/uson/compare/0.1.2...0.1.3
 [0.1.2]: https://github.com/burningtree/uson/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/burningtree/uson/compare/0.1.0...0.1.1
