@@ -1,4 +1,5 @@
 [{
+  "name": "simple",
   "cases": [
     {
       "expression": "a b c",
@@ -9,6 +10,7 @@
     }
   ]
 },{
+  "name": "nested arrays",
   "cases": [
     {
       "expression": "[a]",
@@ -33,6 +35,7 @@
     }
   ]
 },{
+  "name": "simple objects",
   "cases": [
     {
       "expression": "a:1 b:2 c:3",
@@ -50,6 +53,7 @@
     }
   ]
 },{
+  "name": "nested objects",
   "cases": [
     {
       "expression": "a:b:c:d:1",
@@ -70,6 +74,17 @@
       "result": {
         "array": [{"a":[{"b":{"c":{"d":1}}}]}],
         "object": {"a":[{"b":{"c":{"d":1}}}]}
+      }
+    }
+  ]
+},{
+  "name": "more advanced examples",
+  "cases": [
+    {
+      "expression": "number:12.05 text:Banana quotedText:\"John Devilseed\" empty:null good:true",
+      "result": {
+        "array": [{"number":12.05},{"text":"Banana"},{"quotedText":"John Devilseed"},{"empty":null},{"good":true}],
+        "object": {"number":12.05,"text":"Banana","quotedText":"John Devilseed","empty":null,"good":true}
       }
     }
   ]

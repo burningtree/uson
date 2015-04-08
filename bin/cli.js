@@ -17,10 +17,12 @@ program
   .option('-y, --yaml', 'Return output in YAML')
   .option('-m, --msgpack', 'Return output in msgpack')
   .option('-o, --object', 'Object mode')
+  .option('-j, --json', 'JSON-like mode')
   .parse(process.argv);
 
 function parse(input) {
-  var output = USON.parse(input, program.object);
+  var mode = (program.object ? 'object' : (program.json ? 'json' : false));
+  var output = USON.parse(input, mode);
   var space = (program.pretty ? 2 : false);
 
   if(program.msgpack) {

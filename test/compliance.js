@@ -24,10 +24,10 @@ for (var i = 0; i < listing.length; i++) {
 function addTestSuitesFromFile(filename) {
     describe(filename, function() {
         var spec = JSON.parse(fs.readFileSync(filename, 'utf-8'));
-        var modes = [ 'array', 'object' ];
+        var modes = [ 'array', 'object', 'json' ];
         var errorMsg;
         for (var i = 0; i < spec.length; i++) {
-            var msg = "suite " + i + " for filename " + filename;
+            var msg = "suite " + i + " for filename " + filename + " : " + spec[i].name;
             describe(msg, function() {
                 var given = spec[i].given;
                 var cases = spec[i].cases;
@@ -42,17 +42,19 @@ function addTestSuitesFromFile(filename) {
                           it('should throw error for test ' + j, function() {
                               assert.throws(
                                   function() {
-                                    USON.parse(testcase.expression,(mode==='object'));
+                                    USON.parse(testcase.expression,mode);
                                   }, Error, testcase.expression);
                           });
                         })(mode, testcase, given);
                     } else {
-                        (function(mode, testcase, given) {
-                          it('should pass test ' + j + " in mode '"+mode+"' expression: " + testcase.expression, function() {
-                              assert.deepEqual(USON.parse(testcase.expression,(mode==='object')),
+                      if(testcase.result[mode]){
+                        (function(mode, testcase, given, sp) {
+                          it('should pass test ' + j + " expression: " + testcase.expression + ' (m:'+mode+')', function() {
+                              assert.deepEqual(USON.parse(testcase.expression,mode),
                                                testcase.result[mode]);
                           });
-                        })(mode, testcase, given);
+                        })(mode, testcase, given, spec[i]);
+                      }
                     }
                   }
                 }

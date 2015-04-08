@@ -29,17 +29,17 @@ This is initial implementation written in Javascript and node.js. Grammar is wri
 ### Introduction
 
 #### Principles
-* Superset of JSON.
+* Superset of JSON (every JSON is valid μson).
 * Whitespace is not significant.
 * String quoting `"` is optional.
 * In Array or Object, comma `,` can be replaced by whitespace ` `.
-* Object assignation with colon `:` can be repeated to create nested objects.
+* Assignation with colon `:` can be repeated to create nested objects.
 
 #### Output modes
-There are two output modes:
+There are three output modes:
 * `array` (default) - Output as array.
 * `object` - Output as combined object. Suitable for use in the command line.
-* `first` - Output first mixed type. This mode accepts any JSON.
+* `json` - Output first mixed type. 100% compatible with JSON.
 
 ### Example
 ```
@@ -217,9 +217,9 @@ Output:
 
 
 ### Grammar
-See [uson.pegjs](uson.pegjs) file.
+See [uson.pegjs](src/uson.pegjs) file.
 
-* [Visualization of uson grammar](http://dundalek.com/GrammKit/#https://raw.githubusercontent.com/burningtree/uson/master/uson.pegjs).
+* [Visualization of uson grammar](http://dundalek.com/GrammKit/#https://raw.githubusercontent.com/burningtree/uson/master/src/uson.pegjs).
 
 ## Node.js module
 
@@ -315,6 +315,7 @@ $ uson --h
     -y, --yaml           Return output in YAML
     -m, --msgpack        Return output in msgpack
     -o, --object         Object mode
+    -j, --json           JSON-like mode
 
 ```
 

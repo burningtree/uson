@@ -1,4 +1,5 @@
 [{
+  "name": "number",
   "cases": [
     {
       "expression": "1",
@@ -20,9 +21,24 @@
         "array": [ -50.43 ] ,
         "object": { "0": -50.43 }
       }
+    },
+    {
+      "expression": "1000000.0001",
+      "result": {
+        "array": [ 1000000.0001 ],
+        "object": { "0": 1000000.0001 }
+      }
+    },
+    {
+      "expression": "10e5",
+      "result": {
+        "array": [ 10e5 ],
+        "object": { "0": 10e5 }
+      }
     }
   ]
 },{
+  "name": "string",
   "cases": [
     {
       "expression": "abc",
@@ -44,9 +60,38 @@
         "array": [ "abc def" ] ,
         "object": { "0": "abc def" }
       }
+    },
+    {
+      "expression": "\"abc \\\"ok def\"",
+      "result": {
+        "array": [ "abc \"ok def" ] ,
+        "object": { "0": "abc \"ok def" }
+      }
+    },
+    {
+      "expression": "'abc'",
+      "result": {
+        "array": [ "abc" ] ,
+        "object": { "0": "abc" }
+      }
+    },
+    {
+      "expression": "'abc def'",
+      "result": {
+        "array": [ "abc def" ] ,
+        "object": { "0": "abc def" }
+      }
+    },
+    {
+      "expression": "'abc \\'42 def'",
+      "result": {
+        "array": [ "abc '42 def" ] ,
+        "object": { "0": "abc '42 def" }
+      }
     }
   ]
 },{
+  "name": "null",
   "cases": [
     {
       "expression": "null",
@@ -57,6 +102,7 @@
     }
   ]
 },{
+  "name": "true",
   "cases": [
     {
       "expression": "true",
@@ -64,7 +110,11 @@
         "array": [ true ] ,
         "object": { "0": true }
       }
-    },
+    }
+  ]
+},{
+  "name": "false",
+  "cases": [
     {
       "expression": "false",
       "result": {
@@ -74,6 +124,7 @@
     }
   ]
 },{
+  "name": "array",
   "cases": [
     {
       "expression": "[a]",
@@ -83,7 +134,21 @@
       }
     },
     {
+      "expression": "[1 2 3]",
+      "result": {
+        "array": [[ 1, 2, 3 ]],
+        "object": { "0": [ 1, 2, 3 ] }
+      }
+    },
+    {
       "expression": "[1, 2, 3]",
+      "result": {
+        "array": [[ 1, 2, 3 ]],
+        "object": { "0": [ 1, 2, 3 ] }
+      }
+    },
+    {
+      "expression": "[1 2,3 ]",
       "result": {
         "array": [[ 1, 2, 3 ]],
         "object": { "0": [ 1, 2, 3 ] }
@@ -91,6 +156,7 @@
     }
   ]
 },{
+  "name": "object",
   "cases": [
     {
       "expression": "{a:1}",
@@ -100,10 +166,74 @@
       }
     },
     {
-      "expression": "{a:1 b:2 c:3}",
+      "expression": "{a:1 b:two c:3}",
       "result": {
-        "array": [ { "a":1, "b":2, "c":3 } ],
+        "array": [ { "a":1, "b":"two", "c":3 } ],
+        "object": { "a":1, "b":"two", "c":3 }
+      }
+    },
+    {
+      "expression": "{a:1,b:two,c:3}",
+      "result": {
+        "array": [ { "a":1, "b":"two", "c":3 } ],
+        "object": { "a":1, "b":"two", "c":3 }
+      }
+    },
+    {
+      "expression": "{a:1,b:two  c:3,d:4}",
+      "result": {
+        "array": [ { "a":1, "b":"two", "c":3, "d":4 } ],
+        "object": { "a":1, "b":"two", "c":3, "d":4 }
+      }
+    }
+  ]
+},{
+  "name": "simple object",
+  "cases": [
+    {
+      "expression": "a:1",
+      "result": {
+        "array": [ { "a":1 } ],
+        "object": { "a":1 }
+      }
+    },
+    {
+      "expression": "a:b:c:string",
+      "result": {
+        "array": [ {"a":{"b":{"c":"string"}}} ],
+        "object": {"a":{"b":{"c":"string"}}}
+      }
+    },
+    {
+      "expression": "a:1 b:2 c:3",
+      "result": {
+        "array": [ { "a":1 }, { "b":2 }, { "c":3 } ],
         "object": { "a":1, "b":2, "c":3 }
+      }
+    }
+  ]
+},{
+  "name": "comments",
+  "cases": [
+    {
+      "expression": "a:1 # comment",
+      "result": {
+        "array": [ { "a":1 } ],
+        "object": { "a":1 }
+      }
+    },
+    {
+      "expression": "hello: [a # b c]\n# good\n tone ]",
+      "result": {
+        "array": [ { "hello": ["a", "tone"] } ],
+        "object": { "hello": ["a", "tone"] }
+      }
+    },
+    {
+      "expression": "{hello: [#john ]\n] #node\n} 42 #brak\nbecause",
+      "result": {
+        "array": [ { "hello": [] }, 42, "because" ],
+        "object": { "0": 42, "1": "because", "hello": [] } 
       }
     }
   ]
