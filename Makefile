@@ -29,7 +29,7 @@ minify: dist/uson.pack.js
 bench: benchmark/benchmark.js
 	$(NODE) $<
 
-lint: 
+lint:
 	$(LINTER) index.js bin/cli.js test/index.js test/cli.js
 
 test-silent:

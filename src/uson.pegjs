@@ -1,6 +1,20 @@
 /*
  * μson Grammar
  * ============
+ *
+ * Version: draft-0
+ * Date: 2015-04-09
+ *
+ * Based on the JSON grammar from RFC 7159 [1].
+ *
+ * The original JSON PEG.js grammar was written by
+ *   David Majda (@dmajda)
+ *
+ * (c) 2015 Jan Stránský <https://keybase.io/tree>
+ * μson may be freely distributed or modified under the MIT license.
+ *
+ * [1] http://tools.ietf.org/html/rfc7159
+ *
  */
 
 /* ----- μson Grammar ----- */

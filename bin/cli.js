@@ -4,10 +4,11 @@
 var fs = require('fs');
 var USON = require('../');
 var program = require('commander');
-var pversion = require('../package.json').version;
+var pInfo = require('../package.json');
 
 program
-  .version(pversion)
+  .version(pInfo.version)
+  .description(pInfo.description)
   .usage('[options] [expression]')
   .option('-o, --object', '"object" mode')
   .option('-j, --json', '"json" mode')

@@ -333,8 +333,8 @@ If you want prettyfied output, use option `-p, --pretty`.
 
 You can use this output formats:
 - JSON (default)
-- YAML: `-y, --yaml`
-- msgpack: `-m, --msgpack`:
+- [YAML](http://yaml.org): `-y, --yaml`
+- [MessagePack](http://msgpack.org/): `-m, --msgpack`
 
 For example, this returns YAML in Object mode:
 ```
@@ -371,13 +371,15 @@ $ uson --h
 
     -h, --help           output usage information
     -V, --version        output the version number
+    -o, --object         "object" mode
+    -j, --json           "json" mode
     -i, --input <file>   Load data from file
         --output <file>  Write output to file
     -p, --pretty         Pretty print output (only JSON)
     -y, --yaml           Return output in YAML (optional)
     -m, --msgpack        Return output in msgpack (optional)
-    -o, --object         Object mode
-    -j, --json           JSON-like mode
+        --hex            Output in hex encoding
+        --base64         Output in base64 encoding
 
 ```
 
