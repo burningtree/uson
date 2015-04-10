@@ -52,15 +52,18 @@ Runtime.prototype.loadPlugins = function() {
 };
 
 Runtime.prototype.loadRc = function() {
-  var home = process.env[(process.platform === 'win32') ?
-               'USERPROFILE' : 'HOME'];
+  var fn = null;
+  var home = process.env[
+    (process.platform === 'win32') ? 'USERPROFILE' : 'HOME'
+  ];
   if(this.program.usonrc) {
-    if(fs.existsSync(this.program.usonrc)) {
-      return require(this.program.usonrc);
+    fn = path.resolve(this.program.usonrc);
+    if(fs.existsSync(fn)) {
+      return require(fn);
     }
     return this.error('rc file not exists: '+this.program.usonrc);
   }
-  var fn = path.resolve(home, RCFILE);
+  fn = path.resolve(home, RCFILE);
   if(fs.existsSync(fn)) {
     return require(fn);
   }

@@ -1,6 +1,6 @@
 {
   "name": "uson",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "μson (uson) is a shorthand for JSON",
   "main": "index.js",
   "bin": {
@@ -30,10 +30,10 @@
   },
   "devDependencies": {
     "benchmark": "^1.0.0",
-    "browserify": "^9.0.7",
+    "browserify": "^9.0.8",
     "js-yaml": "^3.2.7",
     "jshint": "^2.6.3",
-    "mocha": "^2.2.3",
+    "mocha": "^2.2.4",
     "msgpack": "^0.2.6",
     "pegjs": "^0.8.0",
     "uglify-js": "^2.4.19"

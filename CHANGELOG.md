@@ -4,6 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.0]
+### Added
+- Type casting with `!` symbol.
+- Possibility to define custom types.
+- [lib] Add third argument to `parse()` - object with custom datatypes (default = `{}`).
+- [cli] Output options `--hex` and `--base64`.
+- [cli] Introducing `.usonrc.js` configuration file, which is automatically loaded on cli startup.
+- [cli] Option `-u, --usonrc` for specify `.usonrc.js` file.
+
 ## [0.2.1]
 ### Added
 - More tests.
@@ -57,7 +66,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.1.0 - 2014-04-05
 - Initial release.
 
-[Unreleased]: https://github.com/burningtree/uson/compare/0.2.1...master
+[Unreleased]: https://github.com/burningtree/uson/compare/0.3.0...master
+[0.3.0]: https://github.com/burningtree/uson/compare/0.2.1...0.3.0
 [0.2.1]: https://github.com/burningtree/uson/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/burningtree/uson/compare/0.1.3...0.2.0
 [0.1.3]: https://github.com/burningtree/uson/compare/0.1.2...0.1.3
