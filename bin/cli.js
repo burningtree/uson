@@ -88,7 +88,7 @@ Runtime.prototype.listenStdin = function() {
   process.stdin.on('data', function (buf) {
     var str = buf.toString().trim();
     if(!str) { return; }
-    rt.writeData(rt.parse(str));
+    rt.process(str);
   });
   process.stdin.on('end', function () {
     process.exit();

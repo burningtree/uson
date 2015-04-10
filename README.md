@@ -510,6 +510,9 @@ $ uson --h
 
 ```
 
+## NPM package stats
+[![NPM](https://nodei.co/npm/uson.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/uson/)
+
 ## Inspiration
 Inspired by python CLI utility [jarg](https://github.com/jdp/jarg) by Justin Poliey ([@jdp](https://github.com/jdp)).
 
