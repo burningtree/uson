@@ -35,6 +35,7 @@ end_object      = ws "}" ws
 name_separator  = ws ":" ws
 value_separator = ws [ ,]* ws
 comment_start   = "#"
+typed_start     = ws "!" ws
 ws_char         = [ \t\n\r]
 
 ws "whitespace" = ws_char* comment?
@@ -45,6 +46,7 @@ value
   = false
   / null
   / true
+  / typed
   / assign
   / object
   / array
@@ -154,6 +156,18 @@ unescaped_single_quote = [\x20-\x26\x28-\x5B\x5D-\u10FFFF]
 
 assign
   = m:member {var obj={}; obj[m.name] = m.value; return obj}
+
+/* ----- Typed literals ----- */
+
+typed
+  = name:[a-z0-9]+ typed_start value:expr
+  {
+    var jname = name.join('');
+    if(options.type && options.type[jname]) {
+      return options.type[jname](value, jname);
+    }
+    return value;
+  }
 
 /* ----- Comments ----- */
 

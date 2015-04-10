@@ -26,6 +26,8 @@ This is initial implementation written in Javascript and node.js. Grammar is wri
   * [Arrays](#arrays)
   * [Objects](#objects)
   * [Nested objects](#nested-objects)
+  * [Type casting](#type-casting)
+  * [Custom types](#custom-types)
   * [Comments](#comments)
 * [Grammar](#grammar)
 
@@ -182,8 +184,12 @@ Output in `object` mode:
 
 #### Nested objects
 
-You can use standart colon notation for expand objects, for example:
+You can use standart colon notation for expand objects:
+```
+<key>:(<value>|(<key>:(<value>| .. )))
+```
 
+For example:
 ```
 cities:eu:hu:budapest:Budapest
 ```
@@ -202,6 +208,51 @@ become:
   }
 ]
 ```
+
+#### Type casting
+
+If you want return a value in specific type, you can use this syntax:
+```
+<type>!<expr>
+```
+
+For example, this input:
+```
+str!42
+```
+
+produce this output:
+```
+["42"]
+```
+
+You can use casting repeatedly:
+```
+str!int!12.42
+```
+
+output:
+```
+["12"]
+```
+
+This could be useful especially if you define your [own types](#custom-types).
+
+##### Core casting types
+
+**Scalars:**
+* `str` - string
+* `int` - integer
+* `float` - float
+* `null` - null
+* `bool` - boolean
+* `date` - date & time (ISO 8601 formatting)
+
+#### Custom types
+
+If you use library, it's easy to add support for your own types - just pass object with types as third argument to parse(). See [Defining own types](#defining-own-types).
+
+For CLI you can create `.usonrc.js` file in your home directory `~/`, in which you can define your own types. See [Configuration](#configuration).
 
 #### Comments
 
@@ -246,6 +297,7 @@ For more info see [uson.pegjs](src/uson.pegjs) file.
 * [Compatibility](#compatibility)
 * [Installation](#installation)
 * [Usage](#usage)
+* [Defining own types](#defining-own-types)
 
 ### Compatibility
 
@@ -273,6 +325,21 @@ Output:
 [ 'a', 'b', 'c' ]
 ```
 
+### Defining own types
+
+```javascript
+var USON = require('uson');
+var types = {
+  welcome: function(value) {
+    return("Hello " + value + "!");
+  }
+};
+console.log(USON.parse('welcome!john', null, types));
+```
+Output:
+```javascript
+[ 'Hello john!' ]
+```
 
 ## Browser usage
 
@@ -351,6 +418,57 @@ endpoint:
   id: wikipedia
 ```
 
+### Configuration
+
+#### `.usonrc.js` file
+
+You can create `.usonrc.js` file in your home directory `~/` which may contain your configuration and which is automatically loaded when cli started. Currently it is only possible to define custom data types.
+
+RC file is normal Javascript (Node.js) script. Output must be stored in `module.exports` variable.
+
+##### Example `.usonrc.js`
+
+```javascript
+var chance = require('chance')();
+
+module.exports = {
+  types: {
+    g: function(val) {
+      var args = [];
+      var cmd = null;
+      if(typeof val == "object") {
+        cmd = Object.keys(val)[0];
+        args = val[cmd];
+      } else {
+        cmd = val;
+      }
+      return chance[cmd] ? chance[cmd](args) : null;
+    },
+    js: function(js) {
+      return eval(js);
+    },
+    'hello': function(val) {
+      return 'Hello '+ val;
+    }
+  }
+}
+```
+
+With this example RC file you can generate random values (with excellent [Chance](http://chancejs.com) library), execute Javascript code or simple say hello:
+
+```
+calc:js!"36+64" name:g!name age:g!age ip:g!ip welcome:hello!Mark
+```
+
+And this is result in `object` mode:
+
+```json
+{"calc":100,"name":"Frances Massey","age":26,"ip":"92.201.13.137","welcome":"Hello Mark"}
+```
+
+
+
+
 ### Streams support (pipe)
 
 If you dont specify any input or options then input is taken from standart stdin. This can be used for "piping" results:
@@ -360,7 +478,7 @@ $ echo "a b c:[a:42]" | uson | jq .[2].c[0].a
 ```
 Result:
 
-```
+```json
 42
 ```
 

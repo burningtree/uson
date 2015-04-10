@@ -4,6 +4,15 @@ var parser = require('./dist/parser');
 var assign = require('object-assign');
 var toString = Object.prototype.toString;
 
+var usonTypes = {
+  'str': function(val) { return val.toString(); },
+  'int': function(val) { return parseInt(val); },
+  'float': function(val) { return parseFloat(val); },
+  'null': function() { return null; },
+  'date': function(val) { return new Date(val); },
+  'bool': function(val) { return val === 'true' ? true : false; },
+};
+
 function Interpreter(options) {
   options = options || {};
   this.mode = options.mode || false;
@@ -39,14 +48,16 @@ Interpreter.prototype.toObject = function(values) {
   return obj;
 };
 
-var USON = {
-  parse: function(str, mode) {
+var uson = {
+  parse: function(str, mode, types) {
     // convert to string
     if(toString.call(str) === '[object Object]' && str.toString) {
       str = str.toString();
     }
+    // assign types
+    types = assign(usonTypes, types || {});
     // parse
-    var arr = parser.parse(str);
+    var arr = parser.parse(str, { type: types });
     // create interpreter
     var interpreter = new Interpreter({ mode: mode || false });
     // process
@@ -56,4 +67,4 @@ var USON = {
   parser: parser
 };
 
-module.exports = USON;
+module.exports = uson;

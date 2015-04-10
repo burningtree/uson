@@ -2,9 +2,12 @@
 'use strict';
 
 var fs = require('fs');
-var USON = require('../');
+var path = require('path');
+var uson = require('../');
 var program = require('commander');
 var pInfo = require('../package.json');
+
+var RCFILE = '.usonrc.js';
 
 program
   .version(pInfo.version)
@@ -17,89 +20,118 @@ program
   .option('-p, --pretty', 'Pretty print output (only JSON)')
   .option('-y, --yaml', 'Return output in YAML (optional)')
   .option('-m, --msgpack', 'Return output in msgpack (optional)')
+  .option('-u, --usonrc <usonrc>', 'Use <usonrc> instead of any .usonrc.js')
   .option('    --hex', 'Output in hex encoding')
-  .option('    --base64', 'Output in base64 encoding')
-  .parse(process.argv);
+  .option('    --base64', 'Output in base64 encoding');
 
-function error(str) {
-  console.log('Error: %s', str);
-  process.exit(1);
+function Runtime(program) {
+  this.program = program;
+  this.plugins = this.loadPlugins() || {};
+  this.rc = this.loadRc() || {};
 }
 
-function loadPlugins(program) {
+Runtime.prototype.error = function(str) {
+  console.log('Error: %s', str);
+  process.exit(1);
+};
+
+Runtime.prototype.loadPlugins = function() {
+  var rt = this;
   var plugins = {};
   var config = { yaml: 'js-yaml', msgpack: 'msgpack' };
   Object.keys(config).forEach(function(k) {
-    if(program[k]) {
+    if(rt.program[k]) {
       try { plugins[k] = require(config[k]); }
       catch (e) {
-        error('Cannot load package: '+config[k]+' ('+k+' mode)\n'+
+        rt.error('Cannot load package: '+config[k]+' ('+k+' mode)\n'+
               'Installation instruction: npm install -g '+config[k]);
       }
     }
   });
   return plugins;
-}
+};
 
-function parse(input, plugins) {
-  var mode = (program.object ? 'object' : (program.json ? 'json' : false));
-  var output = USON.parse(input, mode);
-  var space = (program.pretty ? 2 : false);
-
-  if(program.msgpack) {
-    return plugins.msgpack.pack(output);
+Runtime.prototype.loadRc = function() {
+  var home = process.env[(process.platform === 'win32') ?
+               'USERPROFILE' : 'HOME'];
+  if(this.program.usonrc) {
+    if(fs.existsSync(this.program.usonrc)) {
+      return require(this.program.usonrc);
+    }
+    return this.error('rc file not exists: '+this.program.usonrc);
   }
-  if(program.yaml) {
-    return plugins.yaml.dump(output);
+  var fn = path.resolve(home, RCFILE);
+  if(fs.existsSync(fn)) {
+    return require(fn);
+  }
+};
+
+Runtime.prototype.parse = function(input) {
+  var mode = (this.program.object ?
+    'object' : (this.program.json ? 'json' : false));
+
+  var output = uson.parse(input, mode, this.rc.types);
+  var space = (this.program.pretty ? 2 : false);
+
+  if(this.program.msgpack) {
+    return this.plugins.msgpack.pack(output);
+  }
+  if(this.program.yaml) {
+    return this.plugins.yaml.dump(output);
   }
   return JSON.stringify(output, null, space)+'\n';
-}
+};
 
-function writeData(data) {
-  if(program.output) {
-    if(fs.existsSync(program.output)) {
-      return error('File exists: '+program.output+', exiting ..');
-    }
-    fs.writeFileSync(program.output, data);
-    console.log('File saved: '+program.output);
-    return;
-  }
-  if(program.hex) {
-    data = new Buffer(data).toString('hex')+'\n';
-  } else if(program.base64) {
-    data = new Buffer(data).toString('base64')+'\n';
-  }
-  process.stdout.write(data);
-}
 
-function listenStdin(plugins) {
+Runtime.prototype.listenStdin = function() {
+  var rt = this;
   process.stdin.on('data', function (buf) {
     var str = buf.toString().trim();
     if(!str) { return; }
-    writeData(parse(str, plugins));
+    rt.writeData(rt.parse(str));
   });
   process.stdin.on('end', function () {
     process.exit();
   });
-}
+};
 
-function runProgram(program) {
-  var plugins = loadPlugins(program);
+Runtime.prototype.writeData = function(data) {
+  if(this.program.output) {
+    if(fs.existsSync(this.program.output)) {
+      return this.error('File exists: '+this.program.output+', exiting ..');
+    }
+    fs.writeFileSync(this.program.output, data);
+    console.log('File saved: '+this.program.output);
+    return;
+  }
+  if(this.program.hex) {
+    data = new Buffer(data).toString('hex')+'\n';
+  } else if(this.program.base64) {
+    data = new Buffer(data).toString('base64')+'\n';
+  }
+  process.stdout.write(data);
+};
+
+Runtime.prototype.process = function(data) {
+  this.writeData(this.parse(data));
+};
+
+(function runProgram(program) {
+
+  var runtime = new Runtime(program);
 
   if(program.input) {
     if(!fs.existsSync(program.input)) {
-      throw new Error('File not exists: ' + program.input);
+      runtime.error('File not exists: ' + program.input);
     }
     var data = fs.readFileSync(program.input).toString();
-    writeData(parse(data, plugins));
+    runtime.process(data);
   }
 
   else if(program.args.length < 1) {
-    listenStdin();
+    runtime.listenStdin();
   } else {
-    writeData(parse(program.args.join(' '), plugins));
+    runtime.process(program.args.join(' '));
   }
-}
-
-runProgram(program);
+})(program.parse(process.argv));
 
