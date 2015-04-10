@@ -457,17 +457,19 @@ module.exports = {
 With this example RC file you can generate random values (with excellent [Chance](http://chancejs.com) library), execute Javascript code or simple say hello:
 
 ```
-calc:js!"36+64" name:g!name age:g!age ip:g!ip welcome:hello!Mark
+$ uson -op 'calc:js!"36+64" name:g!name ip:g!ip welcome:hello!Mark'
 ```
 
 And this is result in `object` mode:
 
 ```json
-{"calc":100,"name":"Frances Massey","age":26,"ip":"92.201.13.137","welcome":"Hello Mark"}
+{
+  "calc": 100,
+  "name": "Jeffrey Mendez",
+  "ip": "237.63.92.106",
+  "welcome": "Hello Mark"
+}
 ```
-
-
-
 
 ### Streams support (pipe)
 
@@ -489,19 +491,22 @@ $ uson --h
 
   Usage: uson [options] [expression]
 
+  μson (uson) is a shorthand for JSON
+
   Options:
 
-    -h, --help           output usage information
-    -V, --version        output the version number
-    -o, --object         "object" mode
-    -j, --json           "json" mode
-    -i, --input <file>   Load data from file
-        --output <file>  Write output to file
-    -p, --pretty         Pretty print output (only JSON)
-    -y, --yaml           Return output in YAML (optional)
-    -m, --msgpack        Return output in msgpack (optional)
-        --hex            Output in hex encoding
-        --base64         Output in base64 encoding
+    -h, --help             output usage information
+    -V, --version          output the version number
+    -o, --object           "object" mode
+    -j, --json             "json" mode
+    -i, --input <file>     Load data from file
+        --output <file>    Write output to file
+    -p, --pretty           Pretty print output (only JSON)
+    -y, --yaml             Return output in YAML (optional)
+    -m, --msgpack          Return output in msgpack (optional)
+    -u, --usonrc <usonrc>  Use <usonrc> instead of any .usonrc.js
+        --hex              Output in hex encoding
+        --base64           Output in base64 encoding
 
 ```
 
