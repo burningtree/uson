@@ -22,7 +22,7 @@ This is initial implementation written in Javascript and node.js. Grammar is wri
   * [Output modes](#output-modes)
 * [Example](#example)
 * [Basic usage](#basic-usage)
-  * [Standart types](#standart-types)
+  * [Standard types](#standard-types)
   * [Arrays](#arrays)
   * [Objects](#objects)
   * [Nested objects](#nested-objects)
@@ -116,7 +116,7 @@ Optional:
 * regexp TODO
 * function TODO
 
-#### Standart types
+#### Standard types
 
 ```
 number:12.05 text:Banana quotedText:"John Devilseed" empty:null good:true
@@ -185,7 +185,7 @@ Output in `object` mode:
 
 #### Nested objects
 
-You can use standart colon notation for expand objects:
+You can use standard colon notation for expand objects:
 ```
 <key>:(<value>|(<key>:(<value>| .. )))
 ```
@@ -474,7 +474,7 @@ And this is result in `object` mode:
 
 ### Streams support (pipe)
 
-If you dont specify any input or options then input is taken from standart stdin. This can be used for "piping" results:
+If you dont specify any input or options then input is taken from standard input (stdin). This can be used for "piping" results:
 
 ```
 $ echo "a b c:[a:42]" | uson | jq .[2].c[0].a
