@@ -12,6 +12,10 @@ var packageObject = JSON.parse(packageJson);
 var packageYaml = yaml.dump(packageObject);
 var packagePack = msgpack.pack(packageObject);
 
+suite.add('Super nested', function() {
+  USON.parse('a:b:c:d:e:f:g:h:i:j:k:l:m:n:o:p:q:r:s:t:u:v:w:x:y:z');
+});
+
 suite.add('Parsing package.json (default JSON.stringify()', function() {
   JSON.parse(packageJson);
 });

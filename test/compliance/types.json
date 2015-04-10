@@ -40,6 +40,14 @@
         "object": { "0": 10e5 },
         "json": 10e5
       }
+    },
+    {
+      "expression": "float!\"42.42\"",
+      "result": {
+        "array": [ 42.42 ] ,
+        "object": { "0": 42.42 },
+        "json": 42.42
+      }
     }
   ]
 },{
@@ -102,6 +110,14 @@
         "array": [ "abc '42 def" ] ,
         "object": { "0": "abc '42 def" }
       }
+    },
+    {
+      "expression": "str!\"abc def\"",
+      "result": {
+        "array": [ "abc def" ] ,
+        "object": { "0": "abc def" },
+        "json": "abc def"
+      }
     }
   ]
 },{
@@ -113,6 +129,14 @@
         "array": [ null ] ,
         "object": { "0": null },
         "json": null
+      }
+    },
+    {
+      "expression": "x:null!xx",
+      "result": {
+        "array": [ { "x": null } ] ,
+        "object": { "x": null },
+        "json": { "x": null }
       }
     }
   ]
@@ -126,6 +150,14 @@
         "object": { "0": true },
         "json": true
       }
+    },
+    {
+      "expression": "bool!\"true\"",
+      "result": {
+        "array": [ true ] ,
+        "object": { "0": true },
+        "json": true
+      }
     }
   ]
 },{
@@ -133,6 +165,14 @@
   "cases": [
     {
       "expression": "false",
+      "result": {
+        "array": [ false ] ,
+        "object": { "0": false },
+        "json": false
+      }
+    },
+    {
+      "expression": "bool!\"false\"",
       "result": {
         "array": [ false ] ,
         "object": { "0": false },
@@ -171,6 +211,13 @@
         "array": [[ 1, 2, 3 ]],
         "object": { "0": [ 1, 2, 3 ] }
       }
+    },
+    {
+      "expression": "arr!\"1,2,3\"",
+      "result": {
+        "array": [[ 1, 2, 3 ]],
+        "object": { "0": [ 1, 2, 3 ] }
+      }
     }
   ]
 },{
@@ -202,6 +249,13 @@
       "result": {
         "array": [ { "a":1, "b":"two", "c":3, "d":4 } ],
         "object": { "a":1, "b":"two", "c":3, "d":4 }
+      }
+    },
+    {
+      "expression": "obj!'\"a\":1'",
+      "result": {
+        "array": [ { "a":1 } ],
+        "object": { "a":1 }
       }
     }
   ]

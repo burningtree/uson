@@ -43,10 +43,10 @@ ws "whitespace" = ws_char* comment?
 /* ----- Values ----- */
 
 value
-  = false
+  = typed
+  / false
   / null
   / true
-  / typed
   / assign
   / object
   / array

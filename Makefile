@@ -32,6 +32,9 @@ bench: benchmark/benchmark.js
 lint:
 	$(LINTER) index.js bin/cli.js test/index.js test/cli.js
 
+test: test/*
+	$(MOCHA)
+
 test-silent:
 	$(MOCHA) -R dot
 
@@ -41,4 +44,6 @@ help:
 	@echo "   all install build browser peg pack minify"
 	@echo "   bench lint test-silent"
 	@echo ""
+
+.PHONY: all
 

@@ -701,13 +701,13 @@ module.exports = (function() {
     function peg$parsevalue() {
       var s0;
 
-      s0 = peg$parsefalse();
+      s0 = peg$parsetyped();
       if (s0 === peg$FAILED) {
-        s0 = peg$parsenull();
+        s0 = peg$parsefalse();
         if (s0 === peg$FAILED) {
-          s0 = peg$parsetrue();
+          s0 = peg$parsenull();
           if (s0 === peg$FAILED) {
-            s0 = peg$parsetyped();
+            s0 = peg$parsetrue();
             if (s0 === peg$FAILED) {
               s0 = peg$parseassign();
               if (s0 === peg$FAILED) {
@@ -1804,6 +1804,11 @@ var assign = require('object-assign');
 var toString = Object.prototype.toString;
 
 var usonTypes = {
+  // collection
+  'obj': function(val) { return JSON.parse('{'+val+'}'); },
+  'arr': function(val) { return JSON.parse('['+val+']'); },
+
+  // scalars
   'str': function(val) { return val.toString(); },
   'int': function(val) { return parseInt(val); },
   'float': function(val) { return parseFloat(val); },

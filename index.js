@@ -5,6 +5,11 @@ var assign = require('object-assign');
 var toString = Object.prototype.toString;
 
 var usonTypes = {
+  // collection
+  'obj': function(val) { return JSON.parse('{'+val+'}'); },
+  'arr': function(val) { return JSON.parse('['+val+']'); },
+
+  // scalars
   'str': function(val) { return val.toString(); },
   'int': function(val) { return parseInt(val); },
   'float': function(val) { return parseFloat(val); },

@@ -314,7 +314,7 @@ $ npm instal uson
 ### Usage
 
 API is almost same as JSON API:
-* `USON.parse(str, objectMode=false)`
+* `USON.parse(str, mode="object", customTypes={})`
 * `USON.stringify(obj, replacer=null, level=2)` - in development
 
 ```javascript
