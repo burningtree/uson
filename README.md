@@ -39,7 +39,8 @@ This is initial implementation written in Javascript and node.js. Grammar is wri
 * Whitespace is not significant.
 * String quoting `"` is optional.
 * In Array or Object, comma `,` can be replaced by whitespace ` `.
-* Assignation with colon `:` can be repeated to create nested objects.
+* Assignation with colon `:` can be repeated to create nested objects. (see [Nested objects](#nested-objects)).
+* You can use own types, casting is done by `!` character. (see [Type casting](#type-casting)).
 
 #### Output modes
 
