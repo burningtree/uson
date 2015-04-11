@@ -87,7 +87,7 @@ describe('test/cli', function() {
   });
 
   it('should work with custom usorc.js file', function(done) {
-    var file = path.resolve(__dirname, '..', 'examples', 'usonrc.js');
+    var file = path.resolve(__dirname, 'fixtures', 'usonrc.js');
     bin('-u '+file+' \'js!"29.66+(37.02/3)"\'', function(err, data) {
       assert.deepEqual(JSON.parse(data), [42]);
       assert.equal(err, null);
