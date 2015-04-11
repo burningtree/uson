@@ -4,6 +4,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.1]
+### Fixed
+- Fix unescaped strings and problems with ending `}`.
+
+### Changed
+- Allow more characters to use in Type name, now is possible: `a-zA-Z0-9_-`.
+
+### Added
+- Tests for Type casting and custom types.
+
 ## [0.3.0]
 ### Added
 - Type casting with `!` symbol.
@@ -66,7 +76,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.1.0 - 2014-04-05
 - Initial release.
 
-[Unreleased]: https://github.com/burningtree/uson/compare/0.3.0...master
+[Unreleased]: https://github.com/burningtree/uson/compare/0.3.1...master
+[0.3.1]: https://github.com/burningtree/uson/compare/0.3.0...0.3.1
 [0.3.0]: https://github.com/burningtree/uson/compare/0.2.1...0.3.0
 [0.2.1]: https://github.com/burningtree/uson/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/burningtree/uson/compare/0.1.3...0.2.0
