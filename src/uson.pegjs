@@ -26,12 +26,33 @@ uson_text
       return [head].concat(tail);
     }
 
-expr = ws v:value ws {return v}
+expr
+  = ws v:value ws op:operator? ws
+  {
+    if(v && v.type) {
+      if(op && options.operation[v.type] &&
+          options.operation[v.type][op.op]) {
+        return options.operation[v.type][op.op](v, op.expr);
+      }
+    }
+    return v;
+    //if(val && val.type) {
+    //  val = options.type[val.type](val.value);
+    //}
+    //return val;
+  }
+
+statement = ws v:value ws op:operator? ws
+  {
+    return { stat: v, op: op };
+  }
 
 begin_array     = ws "[" ws
 begin_object    = ws "{" ws
+begin_group     = ws "(" ws
 end_array       = ws "]" ws
 end_object      = ws "}" ws
+end_group       = ws ")" ws
 name_separator  = ws ":" ws
 value_separator = ws [ ,]* ws
 comment_start   = "#"
@@ -40,10 +61,19 @@ ws_char         = [ \t\n\r]
 
 ws "whitespace" = ws_char* comment?
 
+/* ----- Groups ----- */
+
+group  = begin_group v:expr end_group ws { return v }
+
+/* ----- Operators ----- */
+
+operator = op:[\*\+\-] v:expr { return {op:op, expr:v} }
+
 /* ----- Values ----- */
 
 value
-  = typed
+  = group
+  / typed
   / false
   / null
   / true
@@ -53,9 +83,9 @@ value
   / number
   / string
 
-false = "false" { return false; }
-null  = "null"  { return null;  }
-true  = "true"  { return true;  }
+null  = "null"  { return { type: "null", value: null }}
+false = "false" { return { type: "bool", value: false }}
+true  = "true"  { return { type: "bool", value: true }}
 
 /* ----- Objects ----- */
 
@@ -66,15 +96,16 @@ object
       rest:(value_separator m:member { return m; })*
       {
         var result = {}, i;
-        result[first.name] = first.value;
+        result[first.name.value] = first.value;
         for (i = 0; i < rest.length; i++) {
-          result[rest[i].name] = rest[i].value;
+          result[rest[i].name.value] = rest[i].value;
         }
         return result;
       }
     )?
     end_object
-    { return members !== null ? members: {}; }
+    { return { type: 'obj', value: members !== null ? members: {} }}
+
 
 member
   = name:string name_separator value:expr {
@@ -91,12 +122,12 @@ array
       { return [first].concat(rest); }
     )?
     end_array
-    { return values !== null ? values : []; }
+    { return { type: "arr", value: values !== null ? values : [] }}
 
 /* ----- Numbers ----- */
 
 number "number"
-  = minus? int frac? exp? { return parseFloat(text()); }
+  = minus? int frac? exp? { return { type: "float", value: text() }; }
 
 decimal_point = "."
 digit1_9      = [1-9]
@@ -111,9 +142,10 @@ zero          = "0"
 /* ----- Strings ----- */
 
 string "string"
-  = double_quoted_string
+  = s:(double_quoted_string
   / single_quoted_string
-  / unquoted_string
+  / unquoted_string)
+  { return { type: "str", value: s }; }
 
 unquoted_string
   = v:simple_char+ { return v.join(""); }
@@ -147,29 +179,27 @@ escaped_char
     )
     { return sequence; }
 
-escape                 = "\\"
-unescaped_simple       = [\x21\x24-\x2B\x2D-\x39\x3B-\x5A\x5E-\x7A\x7C\x7E-\u10FFFF]
-                         /*  forbidden chars: !"#,:[\]{}  */
+unescaped_simple
+  = [\x21\x24-\x27\x2D-\x39\x3B-\x5A\x5E-\x7A\x7C\x7E-\u10FFFF]
+     /*  forbidden chars: !"#()*,:[\]{}  */
 
 unescaped_double_quote = [\x20-\x21\x23-\x5B\x5D-\u10FFFF]
 unescaped_single_quote = [\x20-\x26\x28-\x5B\x5D-\u10FFFF]
 
+escape                 = "\\"
+
 /* ----- Assignations ----- */
 
 assign
-  = m:member {var obj={}; obj[m.name] = m.value; return obj}
+  = m:member
+  { var obj={}; obj[m.name.value] = m.value;
+    return { type: 'obj', value: obj }}
 
 /* ----- Typed literals ----- */
 
 typed
   = name:[a-zA-Z0-9_\-]+ typed_start value:expr
-  {
-    var jname = name.join('');
-    if(options.type && options.type[jname]) {
-      return options.type[jname](value, jname);
-    }
-    return value;
-  }
+  { return { type:name.join(""), value: value }}
 
 /* ----- Comments ----- */
 
