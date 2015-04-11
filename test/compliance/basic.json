@@ -103,6 +103,59 @@
     }
   ]
 },{
+  "name": "type casting",
+  "cases": [
+    {
+      "expression": "str!42",
+      "result": {
+        "array": [ "42" ],
+        "object": { "0": "42" }
+      }
+    },
+    {
+      "expression": "int!str!42",
+      "result": {
+        "array": [ 42 ],
+        "object": { "0": 42 }
+      }
+    },
+    {
+      "expression": "str!int!str!42",
+      "result": {
+        "array": [ "42" ],
+        "object": { "0": "42" }
+      }
+    },
+    {
+      "expression": "x:{test:str!42 multi:bool!str!true}",
+      "result": {
+        "array": [ { "x": { "test": "42", "multi": true }} ],
+        "object": { "x": { "test": "42", "multi": true }}
+      }
+    },
+    {
+      "expression": "str![1 2 3]",
+      "result": {
+        "array": [ "1,2,3" ],
+        "object": { "0": "1,2,3" }
+      }
+    },
+    {
+      "expression": "nonexists!42",
+      "result": {
+        "array": [ "42" ],
+        "object": { "0": "42" }
+      }
+    },
+    {
+      "expression": "A_b3-!42",
+      "result": {
+        "array": [ "42" ],
+        "object": { "0": "42" }
+      }
+    }
+  ]
+},{
   "name": "more advanced examples",
   "cases": [
     {

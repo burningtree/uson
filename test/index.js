@@ -27,5 +27,23 @@ describe('test/index', function() {
       done();
     });
   });
+
+  it('support custom types #1', function() {
+    var types = { 
+      maj: function(val){
+        return val+' day';
+      }
+    };
+    assert.deepEqual(USON.parse('maj!good', null, types), ['good day']);
+  });
+  it('support custom types #2', function() {
+    var types = { 
+      myobj: function(val){
+        return 'hello '+val.name;
+      }
+    };
+    var res = USON.parse('myobj!name:three', null, types);
+    assert.deepEqual(res, ['hello three']);
+  });
 });
 
