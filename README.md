@@ -1,6 +1,6 @@
 # μson (uson)
 
-[![Build Status](https://travis-ci.org/burningtree/uson.svg)](https://travis-ci.org/burningtree/uson) [![Dependency Status](https://david-dm.org/burningtree/uson.svg)](https://david-dm.org/burningtree/uson) [![npm](https://img.shields.io/npm/v/uson.svg)](https://www.npmjs.com/package/uson)
+[![Build Status](https://travis-ci.org/burningtree/uson.svg?branch=master)](https://travis-ci.org/burningtree/uson) [![Dependency Status](https://david-dm.org/burningtree/uson.svg)](https://david-dm.org/burningtree/uson) [![npm](https://img.shields.io/npm/v/uson.svg)](https://www.npmjs.com/package/uson)
 
 A compact human-readable data serialization format especially designed for shell.
 
