@@ -148,7 +148,9 @@ escaped_char
     { return sequence; }
 
 escape                 = "\\"
-unescaped_simple       = [\x21\x24-\x2B\x2D-\x39\x3B-\x5A\x5E-\x7A\x7C-\u10FFFF]
+unescaped_simple       = [\x21\x24-\x2B\x2D-\x39\x3B-\x5A\x5E-\x7A\x7C\x7E-\u10FFFF]
+                         /*  forbidden chars: !"#,:[\]{}  */
+
 unescaped_double_quote = [\x20-\x21\x23-\x5B\x5D-\u10FFFF]
 unescaped_single_quote = [\x20-\x26\x28-\x5B\x5D-\u10FFFF]
 
@@ -160,7 +162,7 @@ assign
 /* ----- Typed literals ----- */
 
 typed
-  = name:[a-z0-9]+ typed_start value:expr
+  = name:[a-zA-Z0-9_\-]+ typed_start value:expr
   {
     var jname = name.join('');
     if(options.type && options.type[jname]) {

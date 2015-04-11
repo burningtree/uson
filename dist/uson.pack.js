@@ -130,15 +130,15 @@ module.exports = (function() {
                   return String.fromCharCode(parseInt(digits, 16));
                 },
         peg$c82 = function(sequence) { return sequence; },
-        peg$c83 = /^[!$-+\--9;-Z\^-z|-\u10FFFF]/,
-        peg$c84 = { type: "class", value: "[!$-+\\--9;-Z\\^-z|-\\u10FFFF]", description: "[!$-+\\--9;-Z\\^-z|-\\u10FFFF]" },
+        peg$c83 = /^[!$-+\--9;-Z\^-z|~-\u10FFFF]/,
+        peg$c84 = { type: "class", value: "[!$-+\\--9;-Z\\^-z|~-\\u10FFFF]", description: "[!$-+\\--9;-Z\\^-z|~-\\u10FFFF]" },
         peg$c85 = /^[ -!#-[\]-\u10FFFF]/,
         peg$c86 = { type: "class", value: "[ -!#-[\\]-\\u10FFFF]", description: "[ -!#-[\\]-\\u10FFFF]" },
         peg$c87 = /^[ -&(-[\]-\u10FFFF]/,
         peg$c88 = { type: "class", value: "[ -&(-[\\]-\\u10FFFF]", description: "[ -&(-[\\]-\\u10FFFF]" },
         peg$c89 = function(m) {var obj={}; obj[m.name] = m.value; return obj},
-        peg$c90 = /^[a-z0-9]/,
-        peg$c91 = { type: "class", value: "[a-z0-9]", description: "[a-z0-9]" },
+        peg$c90 = /^[a-zA-Z0-9_\-]/,
+        peg$c91 = { type: "class", value: "[a-zA-Z0-9_\\-]", description: "[a-zA-Z0-9_\\-]" },
         peg$c92 = function(name, value) {
             var jname = name.join('');
             if(options.type && options.type[jname]) {
