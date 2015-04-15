@@ -17,15 +17,21 @@ program
   .option('-j, --json', '"json" mode')
   .option('-i, --input <file>', 'Load data from file')
   .option('    --output <file>', 'Write output to file')
-  .option('-p, --pretty', 'Pretty print output (only JSON)')
+  .option('-f, --form', 'Return output in form query-string (optional)')
   .option('-y, --yaml', 'Return output in YAML (optional)')
   .option('-m, --msgpack', 'Return output in msgpack (optional)')
+  .option('-p, --pretty', 'Pretty print output (only JSON output)')
   .option('-u, --usonrc <usonrc>', 'Use <usonrc> instead of any .usonrc.js')
   .option('    --hex', 'Output in hex encoding')
   .option('    --base64', 'Output in base64 encoding');
 
 function Runtime(program) {
   this.program = program;
+  this.availablePlugins = {
+    yaml: 'js-yaml',
+    msgpack: 'msgpack',
+    form: 'qs'
+  };
   this.plugins = this.loadPlugins() || {};
   this.rc = this.loadRc() || {};
 }
@@ -38,7 +44,7 @@ Runtime.prototype.error = function(str) {
 Runtime.prototype.loadPlugins = function() {
   var rt = this;
   var plugins = {};
-  var config = { yaml: 'js-yaml', msgpack: 'msgpack' };
+  var config = this.availablePlugins;
   Object.keys(config).forEach(function(k) {
     if(rt.program[k]) {
       try { plugins[k] = require(config[k]); }
@@ -81,6 +87,9 @@ Runtime.prototype.parse = function(input) {
   }
   if(this.program.yaml) {
     return this.plugins.yaml.dump(output);
+  }
+  if(this.program.form) {
+    return this.plugins.form.stringify(output);
   }
   return JSON.stringify(output, null, space)+'\n';
 };

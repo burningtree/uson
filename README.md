@@ -401,12 +401,13 @@ For `json` mode use option `-j, --json`.
 
 If you want prettyfied output, use option `-p, --pretty`.
 
-#### Result format (optional)
+#### Result format
 
 You can use this output formats:
-- JSON (default)
-- [YAML](http://yaml.org): `-y, --yaml`
-- [MessagePack](http://msgpack.org/): `-m, --msgpack`
+- JSON (default): `-j, --json`
+- [Query string](http://en.wikipedia.org/wiki/Query_string): `-f, --form` (optional)
+- [YAML](http://yaml.org): `-y, --yaml` (optional)
+- [MessagePack](http://msgpack.org/): `-m, --msgpack` (optional)
 
 For example, this returns YAML in Object mode:
 ```
@@ -503,6 +504,7 @@ $ uson --h
     -i, --input <file>     Load data from file
         --output <file>    Write output to file
     -p, --pretty           Pretty print output (only JSON)
+    -f, --form             Return output in form query-string
     -y, --yaml             Return output in YAML (optional)
     -m, --msgpack          Return output in msgpack (optional)
     -u, --usonrc <usonrc>  Use <usonrc> instead of any .usonrc.js
