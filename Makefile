@@ -3,7 +3,7 @@ NPM = npm
 PEGJS = node_modules/.bin/pegjs
 BROWSERIFY = node_modules/.bin/browserify
 UGLIFY = node_modules/.bin/uglifyjs
-LINTER = node_modules/.bin/jshint
+LINTER = node_modules/.bin/eslint
 MOCHA = node_modules/.bin/mocha
 
 all: build browser
@@ -30,7 +30,7 @@ bench: benchmark/benchmark.js
 	$(NODE) $<
 
 lint:
-	$(LINTER) index.js bin/cli.js test/index.js test/cli.js
+	$(LINTER) index.js bin/cli.js
 
 test: test/*
 	$(MOCHA)

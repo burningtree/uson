@@ -25,8 +25,8 @@ program
   .option('    --hex', 'Output in hex encoding')
   .option('    --base64', 'Output in base64 encoding');
 
-function Runtime(program) {
-  this.program = program;
+function Runtime(cli) {
+  this.program = cli;
   this.availablePlugins = {
     yaml: 'js-yaml',
     msgpack: 'msgpack',
@@ -42,15 +42,15 @@ Runtime.prototype.error = function(str) {
 };
 
 Runtime.prototype.loadPlugins = function() {
-  var rt = this;
+  var _this = this;
   var plugins = {};
   var config = this.availablePlugins;
   Object.keys(config).forEach(function(k) {
-    if(rt.program[k]) {
+    if(_this.program[k]) {
       try { plugins[k] = require(config[k]); }
       catch (e) {
-        rt.error('Cannot load package: '+config[k]+' ('+k+' mode)\n'+
-              'Installation instruction: npm install -g '+config[k]);
+        _this.error('Cannot load package: ' + config[k] + ' (' + k + ' mode)\n' +
+              'Installation instruction: npm install -g ' + config[k]);
       }
     }
   });
@@ -67,7 +67,7 @@ Runtime.prototype.loadRc = function() {
     if(fs.existsSync(fn)) {
       return require(fn);
     }
-    return this.error('rc file not exists: '+this.program.usonrc);
+    return this.error('rc file not exists: ' + this.program.usonrc);
   }
   fn = path.resolve(home, RCFILE);
   if(fs.existsSync(fn)) {
@@ -91,18 +91,18 @@ Runtime.prototype.parse = function(input) {
   if(this.program.form) {
     return this.plugins.form.stringify(output);
   }
-  return JSON.stringify(output, null, space)+'\n';
+  return JSON.stringify(output, null, space) + '\n';
 };
 
 
 Runtime.prototype.listenStdin = function() {
-  var rt = this;
-  process.stdin.on('data', function (buf) {
+  var _this = this;
+  process.stdin.on('data', function(buf) {
     var str = buf.toString().trim();
     if(!str) { return; }
-    rt.process(str);
+    _this.process(str);
   });
-  process.stdin.on('end', function () {
+  process.stdin.on('end', function() {
     process.exit();
   });
 };
@@ -110,16 +110,16 @@ Runtime.prototype.listenStdin = function() {
 Runtime.prototype.writeData = function(data) {
   if(this.program.output) {
     if(fs.existsSync(this.program.output)) {
-      return this.error('File exists: '+this.program.output+', exiting ..');
+      return this.error('File exists: ' + this.program.output + ', exiting ..');
     }
     fs.writeFileSync(this.program.output, data);
-    console.log('File saved: '+this.program.output);
-    return;
+    console.log('File saved: ' + this.program.output);
+    return true;
   }
   if(this.program.hex) {
-    data = new Buffer(data).toString('hex')+'\n';
+    data = new Buffer(data).toString('hex') + '\n';
   } else if(this.program.base64) {
-    data = new Buffer(data).toString('base64')+'\n';
+    data = new Buffer(data).toString('base64') + '\n';
   }
   process.stdout.write(data);
 };
@@ -128,15 +128,15 @@ Runtime.prototype.process = function(data) {
   this.writeData(this.parse(data));
 };
 
-(function runProgram(program) {
-
-  var runtime = new Runtime(program);
+(function runProgram(cli) {
+  var runtime = new Runtime(cli);
+  var data;
 
   if(program.input) {
     if(!fs.existsSync(program.input)) {
       runtime.error('File not exists: ' + program.input);
     }
-    var data = fs.readFileSync(program.input).toString();
+    data = fs.readFileSync(program.input).toString();
     runtime.process(data);
   }
 

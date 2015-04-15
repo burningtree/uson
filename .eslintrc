@@ -18,7 +18,7 @@ rules:
   eqeqeq: 2
   use-isnan: 2
   no-eq-null: 2
-  brace-style: 2
+  // brace-style: 2
   spaced-line-comment: 2
   valid-jsdoc: 2
   space-infix-ops: 2
@@ -37,7 +37,9 @@ rules:
   camelcase: 2
   new-cap: 2
   consistent-this: [1, "_this"]
-  func-names: 2
+  //func-names: 2
   key-spacing: 2
   no-dupe-keys: 2
   strict: 2
+  no-process-exit: 0
+  no-underscore-dangle: 0

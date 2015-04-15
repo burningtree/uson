@@ -1802,11 +1802,12 @@ module.exports = (function() {
 var parser = require('./dist/parser');
 var assign = require('object-assign');
 var toString = Object.prototype.toString;
+var uson;
 
 var usonTypes = {
   // collection
-  'obj': function(val) { return JSON.parse('{'+val+'}'); },
-  'arr': function(val) { return JSON.parse('['+val+']'); },
+  'obj': function(val) { return JSON.parse('{' + val + '}'); },
+  'arr': function(val) { return JSON.parse('[' + val + ']'); },
 
   // scalars
   'str': function(val) { return val.toString(); },
@@ -1814,7 +1815,7 @@ var usonTypes = {
   'float': function(val) { return parseFloat(val); },
   'null': function() { return null; },
   'date': function(val) { return new Date(val); },
-  'bool': function(val) { return val === 'true' ? true : false; },
+  'bool': function(val) { return val === 'true' ? true : false; }
 };
 
 function Interpreter(options) {
@@ -1846,14 +1847,17 @@ Interpreter.prototype.toObject = function(values) {
       obj = assign(obj, item);
     } else {
       obj[arrcount] = item;
-      arrcount = arrcount+1;
+      arrcount = arrcount + 1;
     }
   });
   return obj;
 };
 
-var uson = {
+uson = {
   parse: function(str, mode, types) {
+    var arr;
+    var interpreter;
+
     // convert to string
     if(toString.call(str) === '[object Object]' && str.toString) {
       str = str.toString();
@@ -1861,9 +1865,9 @@ var uson = {
     // assign types
     types = assign(usonTypes, types || {});
     // parse
-    var arr = parser.parse(str, { type: types });
+    arr = parser.parse(str, { type: types });
     // create interpreter
-    var interpreter = new Interpreter({ mode: mode || false });
+    interpreter = new Interpreter({ mode: mode || false });
     // process
     return interpreter.process(arr);
   },
