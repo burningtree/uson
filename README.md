@@ -411,7 +411,7 @@ You can use this output formats:
 
 For example, this returns YAML in Object mode:
 ```
-$ uson -yo 'endpoint:it:wikipedia'
+$ uson -yo 'endpoint:id:wikipedia'
 ```
 
 Return:
