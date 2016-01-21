@@ -28,9 +28,9 @@ program
 function Runtime(cli) {
   this.program = cli;
   this.availablePlugins = {
-    yaml: 'js-yaml',
-    msgpack: 'msgpack',
-    form: 'qs'
+    'yaml': 'js-yaml',
+    'msgpack': 'msgpack',
+    'form': 'qs'
   };
   this.plugins = this.loadPlugins() || {};
   this.rc = this.loadRc() || {};
@@ -60,7 +60,7 @@ Runtime.prototype.loadPlugins = function() {
 Runtime.prototype.loadRc = function() {
   var fn = null;
   var home = process.env[
-    (process.platform === 'win32') ? 'USERPROFILE' : 'HOME'
+    process.platform === 'win32' ? 'USERPROFILE' : 'HOME'
   ];
   if(this.program.usonrc) {
     fn = path.resolve(this.program.usonrc);
@@ -76,11 +76,11 @@ Runtime.prototype.loadRc = function() {
 };
 
 Runtime.prototype.parse = function(input) {
-  var mode = (this.program.object ?
-    'object' : (this.program.json ? 'json' : false));
+  var mode = this.program.object ?
+    'object' : this.program.json ? 'json' : false;
 
   var output = uson.parse(input, mode, this.rc.types);
-  var space = (this.program.pretty ? 2 : false);
+  var space = this.program.pretty ? 2 : false;
 
   if(this.program.msgpack) {
     return this.plugins.msgpack.pack(output);

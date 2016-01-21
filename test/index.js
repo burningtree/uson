@@ -5,25 +5,28 @@ var assert = require('assert');
 var path = require('path');
 var USON = require('../');
 
+var loadFileSync = function(fn, cb) {
+  return fs.readFileSync(fn, { 'encoding': 'utf8' });
+}
 var loadFixture = function(fn, cb) {
   fn = path.resolve(__dirname,'fixtures',fn);
-  fs.readFile(fn, function(err, data) {
+  fs.readFile(fn, { 'encoding': 'utf8' }, function (err, data) {
     cb(JSON.parse(data));
   });
-};
+}
 
 describe('test/index', function() {
 
   it('should parse JSON Test Pattern: pass #1', function(done) {
     var fn = path.resolve(__dirname,'fixtures','json-pass1.json');
-    USON.parse(fs.readFileSync(fn));
+    USON.parse(loadFileSync(fn));
     done();
   });
 
   it('should parse own package.json file', function(done) {
     var fn = path.resolve(__dirname,'..','package.json');
     loadFixture(fn, function(fixture) {
-      assert.deepEqual(USON.parse(fs.readFileSync(fn), 'json'), fixture);
+      assert.deepEqual(USON.parse(loadFileSync(fn), "json"), fixture);
       done();
     });
   });
@@ -46,4 +49,3 @@ describe('test/index', function() {
     assert.deepEqual(res, ['hello three']);
   });
 });
-

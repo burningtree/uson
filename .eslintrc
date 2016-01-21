@@ -4,7 +4,7 @@ env:
 
 rules:
   no-new-object: 2
-  no-reserved-keys: 2
+  quote-props: 2
   no-array-constructor: 2
   quotes: [2, "single"]
   indent: [2, 2]
@@ -19,7 +19,7 @@ rules:
   use-isnan: 2
   no-eq-null: 2
   // brace-style: 2
-  spaced-line-comment: 2
+  spaced-comment: 2
   valid-jsdoc: 2
   space-infix-ops: 2
   eol-last: 2
@@ -32,7 +32,7 @@ rules:
   no-extra-boolean-cast: 2
   space-before-function-paren: [2, "never"]
   no-spaced-func: 2
-  no-wrap-func: 2
+  no-extra-parens: 2
   one-var: [2, "never"]
   camelcase: 2
   new-cap: 2
@@ -40,6 +40,6 @@ rules:
   //func-names: 2
   key-spacing: 2
   no-dupe-keys: 2
-  strict: 2
+  strict: 1
   no-process-exit: 0
   no-underscore-dangle: 0

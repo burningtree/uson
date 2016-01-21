@@ -26,13 +26,13 @@ function Interpreter(options) {
 
 Interpreter.prototype.process = function(arr) {
   switch(this.mode) {
-    case 'object':
-      return this.toObject(arr);
-    case 'json':
-      return arr[0];
-    // default `array` mode
-    default:
-      return arr;
+  case 'object':
+    return this.toObject(arr);
+  case 'json':
+    return arr[0];
+  // default `array` mode
+  default:
+    return arr;
   }
 };
 
@@ -55,7 +55,7 @@ Interpreter.prototype.toObject = function(values) {
 };
 
 uson = {
-  parse: function(str, mode, types) {
+  'parse': function(str, mode, types) {
     var arr;
     var interpreter;
 
@@ -66,14 +66,14 @@ uson = {
     // assign types
     types = assign(usonTypes, types || {});
     // parse
-    arr = parser.parse(str, { type: types });
+    arr = parser.parse(str, { 'type': types });
     // create interpreter
-    interpreter = new Interpreter({ mode: mode || false });
+    interpreter = new Interpreter({ 'mode': mode || false });
     // process
     return interpreter.process(arr);
   },
-  stringify: function() { return null; },
-  parser: parser
+  'stringify': function() { return null; },
+  'parser': parser
 };
 
 module.exports = uson;
