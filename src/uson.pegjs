@@ -50,8 +50,8 @@ value
   / assign
   / object
   / array
-  / number
   / string
+  / number
 
 false = "false" { return false; }
 null  = "null"  { return null;  }
@@ -116,7 +116,11 @@ string "string"
   / unquoted_string
 
 unquoted_string
-  = v:simple_char+ { return v.join(""); }
+  = v:simple_char+
+  {
+    var res = v.join("");
+    return (res.match(/^[0-9\.]+$/) ? Number(res) : res);
+  }
 
 single_quoted_string
   = "'" v:char_single_quoted* "'" { return v.join(""); }
