@@ -18,7 +18,7 @@ browser:
 	@make pack minify
 
 peg: src/uson.pegjs
-	$(PEGJS) -o speed $< dist/parser.js
+	$(PEGJS) -O speed -o dist/parser.js $<
 
 pack: dist/uson.pack.js
 	$(BROWSERIFY) --standalone USON -o $< index.js

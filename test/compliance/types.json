@@ -62,6 +62,14 @@
       }
     },
     {
+      "expression": "1ab",
+      "result": {
+        "array": [ "1ab" ] ,
+        "object": { "0": "1ab" },
+        "json": "1ab"
+      }
+    },
+    {
       "expression": "abc def",
       "result": {
         "array": [ "abc", "def" ] ,
