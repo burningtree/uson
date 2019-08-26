@@ -18,6 +18,9 @@
     "serialization",
     "yaml"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "author": "Jan Stránský <jan.stransky@arnal.cz>",
   "license": "MIT",
   "bugs": {
